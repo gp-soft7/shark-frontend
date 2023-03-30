@@ -33,6 +33,7 @@ import {
   SummaryEntity,
 } from '../../services/record-api/record-api.service.types';
 import { getCurrentIsoDate } from '../../../../shared/helpers/functions/date/get-current-iso-date.helper';
+import { ModalSmashVinculationComponent } from '../../components/modal-smash-vinculation/modal-smash-vinculation.component';
 
 @Component({
   selector: 'app-control-panel',
@@ -52,6 +53,9 @@ import { getCurrentIsoDate } from '../../../../shared/helpers/functions/date/get
 export class ControlPanelComponent implements OnInit, OnDestroy, ShimmerLoaded {
   @ViewChild(ModalBlazeConnectionComponent, { static: true })
   modalBlazeConnection: ModalBlazeConnectionComponent;
+
+  @ViewChild(ModalSmashVinculationComponent, { static: true })
+  modalSmashVinculation: ModalSmashVinculationComponent;
 
   @ViewChild(ModalViewCallsComponent, { static: true })
   modalViewCallsComponent: ModalViewCallsComponent;
@@ -80,6 +84,7 @@ export class ControlPanelComponent implements OnInit, OnDestroy, ShimmerLoaded {
   onOperationStatusChangeSubscription: Subscription;
   onInvalidSubscription: Subscription;
   onRecordEvent: Subscription;
+  onInvalidSmashVinculation: Subscription;
 
   canShowMobileSettings = true;
 
@@ -280,6 +285,13 @@ export class ControlPanelComponent implements OnInit, OnDestroy, ShimmerLoaded {
         this.addNextRecord(record);
       },
     });
+
+    this.onInvalidSmashVinculation =
+      this.botService.onInvalidSmashVinculation$.subscribe({
+        next: () => {
+          this.modalSmashVinculation.open();
+        },
+      });
   }
 
   updateAll() {

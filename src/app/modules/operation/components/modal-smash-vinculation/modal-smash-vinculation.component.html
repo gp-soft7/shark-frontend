@@ -1,7 +1,7 @@
 <div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
   <div class="modal-container">
     <div class="modal-header">
-      <h3>Conectar na Blaze</h3>
+      <h3>Erro ao iniciar o robô</h3>
 
       <span (click)="close()" class="modal-header-close-button material-icons">
         close
@@ -9,12 +9,16 @@
     </div>
 
     <div class="modal-content">
-      <form (submit)="onFormSubmit()">
+      <span>
+        Você não possui uma conta vinculada a Smash ou a conta fornecida está
+        inválida.
+      </span>
+      <form (submit)="onFormSubmit()" style="margin-top: 20px">
         <app-input
           [form]="form"
-          name="accessToken"
-          label="Código de acesso da Blaze"
-          placeholder="Insira o código de acesso"
+          name="nickname"
+          label="Nickname da Smash"
+          placeholder="Insira seu nickname"
           inputWidth="100%"
         >
         </app-input>
@@ -23,9 +27,12 @@
           type="submit"
           [disabled]="form.invalid"
           [enableLoading]="true"
-          >Conectar</app-button
+          >Vincular</app-button
         >
       </form>
+      <div class="error-message" *ngIf="isErrored">
+        <span>Já existe um vínculo com esse nickname.</span>
+      </div>
     </div>
   </div>
 </div>

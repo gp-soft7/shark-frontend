@@ -17,6 +17,7 @@ import { DpDatePickerModule } from 'ng2-date-picker';
 import { EventCardComponent } from './components/event-card/event-card.component';
 import { TimeRestrictionsComponent } from './components/time-restrictions/time-restrictions.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { ModalSmashVinculationComponent } from './components/modal-smash-vinculation/modal-smash-vinculation.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxMaskModule } from 'ngx-mask';
     CallCardComponent,
     EventCardComponent,
     TimeRestrictionsComponent,
+    ModalSmashVinculationComponent,
   ],
   imports: [
     CommonModule,

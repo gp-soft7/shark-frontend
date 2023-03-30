@@ -34,6 +34,7 @@ export class BotService {
   onStatusChange$ = new Subject<string>();
   onOperationStatusChange$ = new BehaviorSubject<string>(this.operationStatus);
   onInvalidSubscription$ = new Subject();
+  onInvalidSmashVinculation$ = new Subject();
   onRecordEvent$ = new BehaviorSubject<BotRecordEventMessage | null>(null);
 
   statusEvents: { [status: string]: () => void } = {};
@@ -81,6 +82,10 @@ export class BotService {
     this.broker.on(
       'invalid-subscription',
       this.onInvalidSubscription.bind(this)
+    );
+    this.broker.on(
+      'invalid-smash-vinculation',
+      this.onInvalidSmashVinculation.bind(this)
     );
     this.broker.on('record-event', this.onRecordEvent.bind(this));
     this.broker.on('disconnect', this.onDisconnect.bind(this));
@@ -274,6 +279,10 @@ export class BotService {
 
   onInvalidSubscription() {
     this.onInvalidSubscription$.next(null);
+  }
+
+  onInvalidSmashVinculation() {
+    this.onInvalidSmashVinculation$.next(null);
   }
 
   onRecordEvent(data: any) {
