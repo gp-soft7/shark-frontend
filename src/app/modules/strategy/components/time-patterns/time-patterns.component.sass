@@ -1,0 +1,226 @@
+@import 'mixins/display'
+@import 'mixins/hover'
+@import 'mixins/misc'
+@import 'mixins/responsive'
+@import 'fonts'
+
+.container
+  margin-top: 40px
+
+.add-next-button
+  @include flex-center-horizontal
+  @include hover-gray-300
+  user-select: none
+  max-width: 200px
+
+  & span
+    font-size: 16px
+
+  & span.material-icons
+    margin-right: 10px
+
+  &--disabled
+    & span
+      color: $gray100
+      cursor: not-allowed
+
+.pattern-list
+  @include flex-vertical
+  margin-bottom: 20px
+  border: 1px solid $darkblue500
+  border-radius: 5px
+  background: $darkblue200
+
+  &--expired
+    border-color: $lightorange300
+
+    & .pattern-list-items, & .pattern-list-footer
+      pointer-events: none
+
+    & .pattern-list-header-title-buttons
+      & span
+        color: $gray200
+
+.pattern-list-header
+  background: $darkblue350
+  @include flex-center
+  padding: 10px 20px
+  border-bottom: 1px solid $darkblue500
+  border-radius: 5px 5px 0 0
+  cursor: pointer
+  user-select: none
+  min-height: 56px
+
+  & p
+    font-size: 16px
+    font-weight: $sw
+    color: $gray300
+
+.pattern-list-header-title-buttons
+  @include flex-center
+
+  & button
+    height: 35px
+    border-radius: 10px
+    background: $darkblue500
+    border: 1px solid $darkblue500
+    color: $gray200
+    font-family: $bf
+    font-size: 14px
+    font-weight: $rw
+    display: flex
+    align-items: center
+    padding: 0 15px
+    margin-left: 40px
+    transition: all .2s ease
+    cursor: pointer
+    user-select: none
+
+    @include phone
+      padding: 0 10px
+
+      & span
+        margin-right: 0 !important
+
+    &:active
+      transform: translateX(1px) translateY(1px)
+
+    &:hover
+      color: $gray300
+      border: 1px solid $primary200
+
+    & span
+      font-size: 18px
+      margin-right: 5px
+
+.pattern-list-footer
+  padding: 0 20px
+  margin-bottom: 20px
+
+  & .add-next-button
+
+    & span
+      font-size: 14px
+
+.pattern-list-items
+  padding: 20px 20px 10px 20px
+
+.pattern-config
+  padding: 20px 20px 10px 20px
+
+  & small
+    color: $gray100
+    font-size: 10px
+    margin-left: 5px
+
+.pattern-config-checkbox
+  display: flex
+  align-items: center
+  user-select: none
+
+  & label
+    font-size: 14px
+    cursor: pointer
+    margin-left: 5px
+    line-height: 1.275em
+
+.pattern-item
+  @include flex-horizontal
+  align-items: center
+
+  margin-bottom: 10px
+
+.pattern-item-input
+  border: 1px solid $darkblue600
+  background: $darkblue300
+  border-radius: 10px
+  width: 82px
+
+  &:focus
+    border-color: $primary300
+
+.pattern-item-delete
+  color: $lightorange300
+  display: flex
+  align-items: center
+  font-size: 12px
+  justify-content: center
+  padding: 5px
+  cursor: pointer
+  user-select: none
+
+  @include phone
+    border: 1px solid $lightorange300
+    border-radius: 10px
+    height: 34px
+
+    & .material-icons
+      margin-right: 0px !important
+      font-size: 20px !important
+
+  & .material-icons
+    font-size: 14px
+    margin-right: 5px
+
+.pattern-item-target
+  display: flex
+  justify-content: center
+  align-items: center
+
+  margin: 0 10px
+
+  & div.block
+    height: 100%
+    width: 34px
+    height: 34px
+    margin-left: 10px
+    border-radius: 5px
+    cursor: pointer
+    @include transition
+
+.pattern-item-target-input-wrapper
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 0 20px !important
+  height: 44px
+  border: 1px solid $darkblue600
+  background: $darkblue300
+  border-radius: 10px
+  cursor: pointer
+
+  & span.material-icons
+    font-size: 16px
+    margin-right: 5px
+
+  & span
+    color: $gray300
+
+.pattern-item-target-input
+
+  padding: 0 10px
+  padding-right: 0 !important
+
+  &:focus
+    border-color: $primary300
+
+.block-red
+  background: rgba(#FD0E0E, 0.2)
+
+  &:hover, &--active
+    background: #FD0E0E
+    border: 1px solid $gray200
+
+.block-black
+  background: rgba(#363a61, 0.2)
+
+  &:hover, &--active
+    background: #363a61
+    border: 1px solid $gray200
+
+.block-white
+  background: rgba($gray100, 0.2)
+
+  &:hover, &--active
+    background: $gray300
+    border: 1px solid $gray100

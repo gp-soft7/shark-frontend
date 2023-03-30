@@ -1,0 +1,10 @@
+@import 'colors'
+@import 'mixins/misc'
+
+@mixin hover-gray-300
+  color: $gray200
+  cursor: pointer
+  @include transition
+
+  &:hover
+    color: $gray300

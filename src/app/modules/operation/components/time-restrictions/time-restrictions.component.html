@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="white-list">
+    <label class="check-box" for="timeWhiteList">
+      <input type="checkbox" id="timeWhiteList" [(ngModel)]="isWhiteListEnabled" /> Operar nos seguintes
+      horários:
+    </label>
+
+    <div [class.has-disabled]="!isWhiteListEnabled">
+      <div class="time-item-list">
+        <div
+          class="time-item"
+          *ngFor="let item of whiteList; let index = index"
+        >
+          <div class="time-item-row">
+            <div class="time-item-range">
+              <input
+                type="text"
+                [dropSpecialCharacters]="false"
+                mask="Hh:m0"
+                [(ngModel)]="whiteList[index].from"
+                (ngModelChange)="validateItem(index, 'white')"
+              />
+              <span>Até</span>
+              <input
+                type="text"
+                [dropSpecialCharacters]="false"
+                mask="Hh:m0"
+                [(ngModel)]="whiteList[index].to"
+                (ngModelChange)="validateItem(index, 'white')"
+              />
+            </div>
+            <div class="time-item-actions">
+              <span (click)="deleteFromWhiteList(index)">
+                <span class="material-icons">delete_forever</span></span
+              >
+            </div>
+          </div>
+
+          <span class="time-item-error" *ngIf="item.hasError"
+            >Faixa de horário inválida</span
+          >
+        </div>
+      </div>
+
+      <span class="add-button" (click)="addToWhiteList()" *ngIf="whiteList.length < 20">
+        <span class="material-icons"> add </span>
+        Adicionar novo horário
+      </span>
+    </div>
+  </div>
+
+  <div class="black-list">
+    <label class="check-box" for="timeBlackList">
+      <input type="checkbox" id="timeBlackList" [(ngModel)]="isBlackListEnabled" /> Não operar nos seguintes
+      horários:
+    </label>
+
+    <div [class.has-disabled]="!isBlackListEnabled">
+      <div class="time-item-list">
+        <div
+          class="time-item"
+          *ngFor="let item of blackList; let index = index"
+        >
+          <div class="time-item-row">
+            <div class="time-item-range">
+              <input
+                type="text"
+                [dropSpecialCharacters]="false"
+                mask="Hh:m0"
+                [(ngModel)]="blackList[index].from"
+                (ngModelChange)="validateItem(index, 'black')"
+              />
+              <span>Até</span>
+              <input
+                type="text"
+                [dropSpecialCharacters]="false"
+                mask="Hh:m0"
+                [(ngModel)]="blackList[index].to"
+                (ngModelChange)="validateItem(index, 'black')"
+              />
+            </div>
+            <div class="time-item-actions">
+              <span (click)="deleteFromBlackList(index)">
+                <span class="material-icons">delete_forever</span></span
+              >
+            </div>
+          </div>
+
+          <span class="time-item-error" *ngIf="item.hasError"
+            >Faixa de horário inválida</span
+          >
+        </div>
+      </div>
+
+      <span class="add-button" (click)="addToBlackList()" *ngIf="blackList.length < 20">
+        <span class="material-icons"> add </span>
+        Adicionar novo horário
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+@import 'fonts'
+@import 'colors'
+
+label
+  font-size: 14px
+  margin-bottom: 8px
+  transition: all .2s ease
+  display: flex
+  align-items: center
+  cursor: pointer
+  user-select: none
+  line-height: 1.275em
+
+  & input
+    margin-right: 8px
+    width: 16px
+
+.wrapper
+  display: flex
+  align-items: flex-start
+  flex-direction: column
+  margin-bottom: 10px
+  height: 95px
+
+.container
+  display: flex
+  align-items: center
+  background: $darkblue300
+  padding: 0 10px
+  border: 1px solid $darkblue600
+  border-radius: 10px
+  transition: all .2s ease
+
+.anchor-text
+  font-weight: $sw
+  color: $gray300
+  user-select: none
+
+  &-left
+    margin-left: 5px
+
+  &-right
+    margin-right: 5px
+
+.has-anchor-text
+  padding: 0 5px !important
+
+.has-error
+  & .container
+    border-color: $lightorange300
+
+.has-focus
+  & label
+    color: $gray300
+
+  & .container
+    border-color: $primary300
+
+.has-disabled
+
+  & .container
+    opacity: .3
+    pointer-events: none
+
+.error-message
+  color: $lightorange300
+  font-size: 12px
+  margin-top: 5px
+
+.password-toggle
+  font-size: 16px
+  color: $gray200
+  cursor: pointer
+  transition: all .2s ease
+
+  &:hover
+    color: $gray300
+
+input
+  width: 100%

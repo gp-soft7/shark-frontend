@@ -1,0 +1,84 @@
+@import 'mixins/display'
+@import 'mixins/hover'
+@import 'mixins/misc'
+@import 'mixins/responsive'
+@import 'fonts'
+
+.add-next-button
+  @include flex-center-horizontal
+  @include hover-gray-300
+  user-select: none
+  max-width: 200px
+  margin-top: 20px
+
+  & span
+    font-size: 16px
+
+  & span.material-icons
+    margin-right: 10px
+
+  &--disabled
+    & span
+      color: $gray100
+      cursor: not-allowed
+
+.trigger-list
+  display: flex
+
+.trigger-item
+  border: 1px solid $darkblue500
+  margin-right: 20px
+  padding: 10px 20px 20px 20px
+  border-radius: 5px
+  user-select: none
+  background: $darkblue400
+  @include transition
+  cursor: pointer
+
+  &:hover
+    border-color: $primary200
+
+.trigger-item-header
+  display: flex
+  align-items: center
+
+.trigger-item-actions
+  margin-left: 40px
+  @include transition
+
+  & button
+    background: transparent
+    color: $gray300
+    border: none
+    border-radius: 5px
+    width: 30px
+    height: 30px
+    display: flex
+    justify-content: center
+    align-items: center
+    cursor: pointer
+    transition: all .2s ease
+
+    &:hover
+      background: $darkblue700
+
+.trigger-item-content
+  margin: 10px 0
+
+  & p
+    color: $gray300
+    font-size: 18px
+
+.trigger-item-type
+  display: flex
+
+  & span.material-icons
+    max-width: 12px
+
+  & span
+    font-size: 12px
+    margin-right: 5px
+
+.trigger-item-footer
+  & span
+    font-size: 10px

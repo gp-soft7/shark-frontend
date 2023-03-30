@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="header">
+    <app-alert *ngIf="isBotOperating">
+      O robô ja está operando. qualquer alteração feita na estratégia não será
+      refletida no robô até que ele seja religado.
+    </app-alert>
+
+    <div
+      class="shimmer-h2 shimmer"
+      *ngIf="canShowShimmer()"
+      [style.width]="'450px'"
+    ></div>
+
+    <h2 *ngIf="isLoaded()">
+      {{
+        isEditing ? 'Editar "' + strategyName + '"' : "Criar nova estratégia"
+      }}
+    </h2>
+
+    <div
+      class="shimmer-header-game-select shimmer"
+      *ngIf="canShowShimmer()"
+    ></div>
+
+    <div
+      class="shimmer-header-game-select shimmer"
+      *ngIf="canShowShimmer()"
+    ></div>
+
+    <div class="header-game-select-wrapper">
+      <div class="header-game-select" *ngIf="isLoaded()">
+        <span>Selecione o jogo: </span>
+
+        <div class="header-game-select-buttons">
+          <app-toggle
+            [options]="[
+              { key: 'CRASH', text: 'CRASH', icon: 'trending_up' },
+              { key: 'DOUBLE', text: 'DOUBLE', icon: 'view_in_ar' }
+            ]"
+            [selected]="strategyGame"
+            (onSelected)="editStrategyGame($event.key)"
+          ></app-toggle>
+        </div>
+      </div>
+
+      <div class="header-game-select" *ngIf="isLoaded()">
+        <span>Selecione a plataforma: </span>
+
+        <div class="header-game-select-buttons">
+          <app-toggle
+            [options]="[
+              { key: 'BLAZE', text: 'Blaze', icon: 'pentagon' },
+              { key: 'SMASH', text: 'Smash', icon: 'pentagon' }
+            ]"
+            [selected]="strategyPlatform"
+            (onSelected)="editStrategyPlatform($event.key)"
+          ></app-toggle>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-name-actions">
+      <div
+        class="shimmer-h3 shimmer"
+        [style.width]="'270px'"
+        [style.margin-bottom]="'0 !important'"
+        *ngIf="canShowShimmer()"
+      ></div>
+      <h3 *ngIf="isLoaded()" (click)="editStrategyName()">
+        Estratégia "{{ strategyName }}"
+        <span class="material-icons"> edit </span>
+      </h3>
+
+      <div class="header-buttons">
+        <app-button
+          [width]="responsitivy.isPhone ? '100%' : '200px'"
+          (onSafeClick)="submitStrategy()"
+          [enableLoading]="true"
+          >{{ isEditing ? "Editar" : "Salvar" }} estratégia</app-button
+        >
+      </div>
+    </div>
+  </div>
+  <div class="builder">
+    <div class="builder-tabs">
+      <div class="builder-tab-topic" *ngFor="let tab of tabs">
+        <ng-container *ngFor="let tabItem of tab.items">
+          <div
+            *ngIf="tabItem.filter ? tabItem.filter() : true"
+            class="builder-tab"
+            [class.builder-tab--active]="isCurrentTab(tabItem.name)"
+            (click)="setCurrentTab(tabItem.name)"
+          >
+            <ng-container *ngIf="isLoaded()">
+              <span class="material-icons"> {{ tabItem.icon }}</span>
+              <span>{{ tabItem.text }}</span>
+            </ng-container>
+
+            <ng-container *ngIf="canShowShimmer()">
+              <div class="shimmer-builder-tab shimmer"></div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <ng-container *ngIf="canShowShimmer()">
+      <div class="builder-tab-content">
+        <div
+          class="shimmer"
+          [style.height]="'20px'"
+          [style.margin-bottom]="'20px'"
+        ></div>
+        <div
+          class="shimmer"
+          [style.height]="'200px'"
+          [style.margin-bottom]="'20px'"
+        ></div>
+        <div
+          class="shimmer"
+          [style.height]="'150px'"
+          [style.margin-bottom]="'20px'"
+        ></div>
+      </div>
+    </ng-container>
+
+    <div
+      class="builder-tab-content"
+      [hidden]="!isCurrentTab('patterns') || !isLoaded()"
+    >
+      <h3>Lista de padrões</h3>
+
+      <span
+        >A sequência do padrão é lida do último ao primeiro, de baixo para
+        cima.</span
+      >
+
+      <app-double-patterns
+        [hidden]="strategyGame !== 'DOUBLE'"
+        #doublePatterns
+      ></app-double-patterns>
+
+      <app-crash-patterns
+        [hidden]="strategyGame !== 'CRASH'"
+        #crashPatterns
+      ></app-crash-patterns>
+    </div>
+
+    <div
+      class="builder-tab-content"
+      [hidden]="!isCurrentTab('time') || !isLoaded()"
+    >
+      <h3>Lista de horários</h3>
+      <span
+        >Os horários serão operados de acordo com o horário da Blaze e de
+        BRASÍLIA.</span
+      >
+
+      <app-time-patterns #timePatterns [form]="form"></app-time-patterns>
+    </div>
+
+    <div
+      class="builder-tab-content"
+      [hidden]="!isCurrentTab('risk-management') || !isLoaded()"
+    >
+      <app-risk-management [form]="form"></app-risk-management>
+    </div>
+
+    <div
+      class="builder-tab-content"
+      [hidden]="!isCurrentTab('leverage') || !isLoaded()"
+    >
+      <app-leverage [form]="form"></app-leverage>
+    </div>
+
+    <div
+      class="builder-tab-content"
+      [hidden]="!isCurrentTab('simulation') || !isLoaded()"
+    >
+      <h3>Lucro e Prejuízo</h3>
+
+      <span
+        >Acompanhe os possiveis lucros e prejuízos seguindo a estratégia.</span
+      >
+      <app-simulation [form]="form"></app-simulation>
+    </div>
+
+    <div
+      class="builder-tab-content"
+      [hidden]="!isCurrentTab('start-triggers') || !isLoaded()"
+    >
+      <h3>Gatilhos de Entrada</h3>
+
+      <app-start-triggers></app-start-triggers>
+    </div>
+  </div>
+</div>
+<app-modal-change-strategy-name></app-modal-change-strategy-name>

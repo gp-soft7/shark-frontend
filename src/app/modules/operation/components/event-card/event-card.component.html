@@ -1,0 +1,15 @@
+<div
+  class="record-card event-card"
+  *ngIf="record.event"
+  [class]="'event-card-' + getEventRecordTypeClass(record.event.type)"
+>
+  <div class="event-card-header">
+    <div>
+      <span class="material-icons">{{
+        getEventRecordTypeIcon(record.event.type)
+      }}</span>
+      <span>{{ getEventRecordTypeLabel(record.event.type) }}</span>
+    </div>
+    <span>{{ getCallDate(record.createdAt) }}</span>
+  </div>
+</div>

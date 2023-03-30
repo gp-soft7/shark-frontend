@@ -1,0 +1,77 @@
+<div class="my-account-container">
+  <div class="content">
+    <ng-container *ngIf="canShowShimmer()">
+      <div class="shimmer shimmer-h3" [style.width]="'110px'"></div>
+
+      <div class="shimmer-horizontal">
+        <div
+          class="shimmer-data-item shimmer"
+          [style.width]="width + 'px'"
+          *ngFor="let width of dataItemWidths"
+        ></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isLoaded()">
+      <h3>Meus dados</h3>
+
+      <div class="data-item-list">
+        <div class="data-item">
+          <span>Nome</span>
+          <span>{{ userProfile.firstName + " " + userProfile.lastName }}</span>
+        </div>
+
+        <div class="data-item">
+          <span>Email</span>
+          <span>{{ userProfile.email }}</span>
+        </div>
+
+        <div class="data-item">
+          <span>CPF</span>
+          <span>{{ userProfile.cpf }}</span>
+        </div>
+
+        <div class="data-item">
+          <span>Celular</span>
+          <span>{{ userProfile.cellphone }}</span>
+        </div>
+
+        <div class="data-item">
+          <span>Último login</span>
+          <span>{{ userProfile.lastLoginAt | date : "dd/MM/yyyy HH:mm" }}</span>
+        </div>
+        <app-button
+          variant="outline-tiny"
+          [width]="'200px'"
+          (click)="modalChangePasswordComponent.open()"
+          >Alterar senha</app-button
+        >
+      </div>
+
+      <h3>Minha assinatura</h3>
+      <div
+        class="data-item-list"
+        *ngIf="userSubscription === null; else hasUserSubscription"
+      >
+        <span>Você não tem uma assinatura.</span>
+      </div>
+
+      <ng-template #hasUserSubscription>
+        <div class="data-item-list">
+          <div class="data-item">
+            <span>Status</span>
+            <span>{{ getSubscriptionStatus() }}</span>
+          </div>
+          <div class="data-item">
+            <span>Última Atualização</span>
+            <span>{{
+              userSubscription.updatedAt | date : "dd/MM/yyyy HH:mm"
+            }}</span>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>
+
+<app-modal-change-password></app-modal-change-password>

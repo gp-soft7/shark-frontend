@@ -1,0 +1,7 @@
+<div class="alert" *ngIf="isVisible" (click)="isVisible = false">
+  <div class="alert-content">
+    <span class="material-icons"> warning </span>
+    <span><ng-content></ng-content></span>
+  </div>
+  <span class="material-icons alert-close"> close </span>
+</div>

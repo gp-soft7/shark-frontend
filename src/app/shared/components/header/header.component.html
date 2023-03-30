@@ -1,0 +1,94 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="routes">
+      <a [routerLink]="['']"
+        ><img src="./assets/shark-logo.png" alt="Logo"
+      /></a>
+      <div class="route"><a [routerLink]="['']">Painel de Controle</a></div>
+      <div class="route"><a [routerLink]="['/strategies']">Estratégias</a></div>
+      <div
+        class="route risk-management-alert bottom"
+        data-tooltip="Você não tem um gerenciamento de risco. clique para configurar."
+        [class.risk-management-alert]="!hasRiskManagement"
+        [class.tooltip]="!hasRiskManagement"
+      >
+        <span class="material-icons" *ngIf="!hasRiskManagement">
+          warning_amber
+        </span>
+        <a (click)="openRiskManagementModal()">Gerenciamento de Risco</a>
+      </div>
+      <!-- <div class="route"><a [routerLink]="['/catalog']">Catalogador</a></div> -->
+    </div>
+    <div class="authenticated" *ngIf="isAuthenticated; else notAuthenticated">
+      <app-dropdown [items]="accountDropdownItems">
+        <div class="account-dropdown">
+          <span class="highlight">Olá, {{ user.firstName }}</span>
+          <span class="material-icons"> expand_more </span>
+        </div>
+      </app-dropdown>
+    </div>
+
+    <ng-template #notAuthenticated>
+      <div class="not-authenticated">
+        <a>Logar</a>
+        <a>Registrar</a>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="mobile-container">
+    <a [routerLink]="['']"><img src="./assets/shark-logo.png" alt="Logo" /></a>
+
+    <span class="material-icons" (click)="toggleMobileMenu()"> menu </span>
+  </div>
+
+  <div
+    class="mobile-menu"
+    *ngIf="isMobileMenuOpen"
+    [@fadeInOnEnter]
+    [@fadeOutOnLeave]
+  >
+    <div
+      class="mobile-menu-account"
+      *ngIf="isAuthenticated; else mobileNotAuthenticated"
+    >
+      <app-dropdown [items]="accountDropdownItems">
+        <div class="account-dropdown">
+          <span
+            >Olá, <span class="highlight">{{ user.firstName }}</span></span
+          >
+          <span class="material-icons"> expand_more </span>
+        </div>
+      </app-dropdown>
+    </div>
+
+    <div class="mobile-menu-list">
+      <div
+        class="mobile-menu-item"
+        [routerLink]="['']"
+        (click)="closeMobileMenu()"
+      >
+        <a [routerLink]="['']">Painel de Controle</a>
+      </div>
+      <div
+        class="mobile-menu-item"
+        [routerLink]="['/strategies']"
+        (click)="closeMobileMenu()"
+      >
+        <a [routerLink]="['/strategies']">Estratégias</a>
+      </div>
+      <div
+        class="mobile-menu-item"
+        (click)="openRiskManagementModal(); closeMobileMenu()"
+      >
+        <a>Gerenciamento de Risco</a>
+      </div>
+    </div>
+
+    <ng-template #mobileNotAuthenticated>
+      <div class="mobile-menu-account">
+        <a>Fazer login</a>
+      </div></ng-template
+    >
+  </div>
+</div>

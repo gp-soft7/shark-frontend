@@ -1,0 +1,29 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Alterar nome da estratégia</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <app-input
+        [form]="form"
+        name="strategyName"
+        label="Nome da Estratégia"
+        placeholder="Insira o nome da estratégia"
+        inputWidth="100%"
+        (keydown.enter)="form.valid && close()"
+      >
+      </app-input>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-footer-button">
+        <app-button (onSafeClick)="close()">ALTERAR</app-button>
+      </div>
+    </div>
+  </div>
+</div>

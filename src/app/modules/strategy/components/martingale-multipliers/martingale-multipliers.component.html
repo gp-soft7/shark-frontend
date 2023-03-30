@@ -1,0 +1,29 @@
+<div class="container" [formGroup]="form">
+  <app-input
+    [form]="form"
+    type="number-resizable"
+    [name]="multiplierCountControl"
+    label="Quantidade de martingales:"
+    rightText="Martingales"
+    [minWidth]="20"
+  ></app-input>
+
+  <ng-container [formArrayName]="customMultipliersControl">
+    <ng-container
+      *ngFor="
+        let control of martingaleCustomMultipliers.controls;
+        let index = index
+      "
+    >
+      <app-input
+        [formGroupName]="index"
+        [form]="control"
+        type="number-resizable"
+        name="multiplier"
+        [label]="'Multiplicador #' + (index + 1)"
+        rightText="X"
+        [minWidth]="20"
+      ></app-input>
+    </ng-container>
+  </ng-container>
+</div>

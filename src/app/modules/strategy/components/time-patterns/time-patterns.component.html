@@ -1,0 +1,136 @@
+<div class="container">
+  <div
+    class="pattern-list"
+    [class.pattern-list--expired]="pattern.deadlineExpired"
+    *ngFor="let pattern of patterns; let patternIndex = index"
+  >
+    <div
+      class="pattern-list-header"
+      (click)="
+        pattern.show == undefined
+          ? (pattern.show = true)
+          : (pattern.show = !pattern.show)
+      "
+    >
+      <div class="pattern-list-header-title-buttons">
+        <p>
+          ({{ pattern.items.length }}) Lista do dia
+          {{ pattern.date | date: "dd/MM" }}
+          <span *ngIf="pattern.deadlineExpired">(Expirada)</span>
+        </p>
+
+        <button
+          (click)="deletePattern({ patternIndex })"
+          *ngIf="canDeletePattern({ patternIndex })"
+        >
+          <span class="material-icons"> delete_forever </span>
+          <ng-container *ngIf="!responsitivy.isPhone">Excluir</ng-container>
+        </button>
+      </div>
+      <span class="material-icons" [@rotate]="pattern.show"> expand_less </span>
+    </div>
+    <div [@collapse]="!pattern.show">
+      <div class="pattern-config" *ngIf="!pattern.deadlineExpired">
+        <div class="pattern-config-checkbox">
+          <input
+            type="checkbox"
+            [id]="'pattern-config-checkbox-' + patternIndex"
+            [(ngModel)]="pattern.operateAllRounds"
+          />
+          <label [for]="'pattern-config-checkbox-' + patternIndex"
+            >Operar todas as rodadas de cada horário</label
+          >
+        </div>
+        <small
+          >Se desmarcado, será operado apenas a primeira rodada do
+          horário</small
+        >
+      </div>
+
+      <div class="pattern-list-items">
+        <div
+          class="pattern-item"
+          *ngFor="
+            let patternItem of pattern.items;
+            let patternItemIndex = index
+          "
+        >
+          <input
+            type="text"
+            class="pattern-item-input"
+            [(ngModel)]="patterns[patternIndex].items[patternItemIndex].time"
+            [id]="'pattern-item-input' + patternIndex + '-' + patternItemIndex"
+            [dropSpecialCharacters]="false"
+            mask="Hh:m0"
+          />
+          <div class="pattern-item-target" *ngIf="strategyGame === 'DOUBLE'">
+            <div
+              class="block block-red"
+              [class.block-red--active]="isPatternItemTarget({ patternIndex, patternItemIndex }, 'red')"
+              (click)="changePatternItemTarget({ patternIndex, patternItemIndex }, 'red')"
+            ></div>
+            <div
+              class="block block-black"
+              [class.block-black--active]="isPatternItemTarget({ patternIndex, patternItemIndex }, 'black')"
+              (click)="changePatternItemTarget({ patternIndex, patternItemIndex }, 'black')"
+            ></div>
+            <div
+              class="block block-white"
+              [class.block-white--active]="isPatternItemTarget({ patternIndex, patternItemIndex }, 'white')"
+              (click)="changePatternItemTarget({ patternIndex, patternItemIndex }, 'white')"
+            ></div>
+          </div>
+
+          <div class="pattern-item-target" *ngIf="strategyGame === 'CRASH'">
+            <div
+              class="pattern-item-target-input-wrapper"
+              (click)="targetInput.focus()"
+            >
+              <span class="material-icons"> trending_up </span>
+              <span>Alvo:</span>
+              <input
+                class="pattern-item-target-input"
+                #targetInput
+                appOnlyNumbers
+                type="text"
+                autoSizeInput
+                [minWidth]="20"
+                [maxWidth]="100"
+                [(ngModel)]="
+                  patterns[patternIndex].items[patternItemIndex].target
+                "
+                (focus)="targetInput.value = ''"
+              />
+            </div>
+          </div>
+          <div
+            class="pattern-item-delete"
+            (click)="deletePatternItem({ patternIndex, patternItemIndex })"
+            *ngIf="!pattern.deadlineExpired"
+          >
+            <span class="material-icons"> delete_forever </span>
+            <span *ngIf="!responsitivy.isPhone">Excluir</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern-list-footer" *ngIf="!pattern.deadlineExpired">
+        <div class="add-next-button" (click)="addPatternItem({ patternIndex})">
+          <span class="material-icons"> add </span>
+          <span> Adicionar horário</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="add-next-button top"
+    (click)="!hasMaxPatterns() && addPattern()"
+    [class.add-next-button--disabled]="hasMaxPatterns()"
+    [class.tooltip]="hasMaxPatterns()"
+    data-tooltip="Só é possivel adicionar até 3 (três) listas"
+  >
+    <span class="material-icons"> add </span>
+    <span> Adicionar próxima lista</span>
+  </div>
+</div>

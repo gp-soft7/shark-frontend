@@ -1,0 +1,197 @@
+<label
+  *ngIf="isFromTypes(['checkbox']); else notBoxInput"
+  [for]="name"
+  (click)="toggleActivate()"
+  [formGroup]="form"
+>
+  <input
+    type="checkbox"
+    [name]="name"
+    [formGroup]="form"
+    [formControlName]="name"
+    (focus)="hasFocus = true"
+    (blur)="hasFocus = false"
+    [attr.disabled]="isDisabled"
+    [checked]="isActivated"
+  />
+
+  {{ label }}
+</label>
+
+<ng-template #notBoxInput>
+  <div
+    class="wrapper"
+    [style.max-width]="baseWidth ?? '100%'"
+    [class.has-focus]="hasFocus"
+    [class.has-error]="hasError"
+    [class.has-disabled]="!hasActivated"
+    [formGroup]="form"
+  >
+    <label [for]="name" *ngIf="label" (click)="toggleActivate()">
+      <input
+        type="checkbox"
+        *ngIf="requiresActivation"
+        [checked]="isActivated"
+      />
+
+      {{ label }}
+    </label>
+
+    <div class="container" [style.width]="inputWidth ?? 'auto'">
+      <span
+        class="anchor-text anchor-text-left"
+        *ngIf="leftText"
+        (click)="focusInput()"
+        >{{ leftText }}</span
+      >
+      <input
+        #input
+        *ngIf="isFromTypes(['text', 'number'])"
+        [type]="type"
+        [placeholder]="placeholder"
+        [name]="name"
+        [formGroup]="form"
+        [formControlName]="name"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        #input
+        *ngIf="isFromType('password')"
+        [type]="isPasswordVisible ? 'text' : type"
+        [placeholder]="placeholder"
+        [name]="name"
+        [formGroup]="form"
+        [formControlName]="name"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        #input
+        *ngIf="isFromType('text-resizable')"
+        [type]="'text'"
+        [placeholder]="placeholder"
+        [name]="name"
+        [formGroup]="form"
+        [formControlName]="name"
+        [class.has-anchor-text]="hasAnchorText"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        autoSizeInput
+        [minWidth]="minWidth ?? 100"
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        #input
+        *ngIf="isFromType('number-resizable')"
+        type="text"
+        appOnlyNumbers
+        [placeholder]="placeholder"
+        [name]="name"
+        [formGroup]="form"
+        [formControlName]="name"
+        [class.has-anchor-text]="hasAnchorText"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        autoSizeInput
+        [minWidth]="minWidth ?? 100"
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        #input
+        *ngIf="isFromType('currency-resizable')"
+        [type]="'text'"
+        [placeholder]="placeholder"
+        [name]="name"
+        [formGroup]="form"
+        [formControlName]="name"
+        [class.has-anchor-text]="hasAnchorText"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        autoSizeInput
+        [minWidth]="minWidth ?? 100"
+        currencyMask
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        *ngIf="isFromType('currency')"
+        [type]="'text'"
+        [placeholder]="placeholder"
+        [name]="name"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        [formGroup]="form"
+        [formControlName]="name"
+        currencyMask
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        *ngIf="isFromType('phone')"
+        [type]="'text'"
+        [placeholder]="placeholder"
+        [name]="name"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        [formGroup]="form"
+        [formControlName]="name"
+        [dropSpecialCharacters]="false"
+        mask="(00) 0000-0000||(00) 00000-0000"
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        *ngIf="isFromType('cpf')"
+        [type]="'text'"
+        [placeholder]="placeholder"
+        [name]="name"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        [formGroup]="form"
+        [formControlName]="name"
+        [dropSpecialCharacters]="false"
+        mask="000.000.000-00"
+        [attr.disabled]="isDisabled"
+      />
+
+      <input
+        *ngIf="isFromType('date-string')"
+        [type]="'text'"
+        [placeholder]="placeholder"
+        [name]="name"
+        (focus)="hasFocus = true"
+        (blur)="hasFocus = false"
+        [formGroup]="form"
+        [formControlName]="name"
+        [dropSpecialCharacters]="false"
+        mask="d0/M0/0000"
+        [attr.disabled]="isDisabled"
+      />
+
+      <span
+        class="anchor-text anchor-text-right"
+        *ngIf="rightText"
+        (click)="focusInput()"
+        >{{ rightText }}</span
+      >
+
+      <span
+        class="anchor-text anchor-text-right material-icons password-toggle"
+        *ngIf="isFromType('password')"
+        (click)="togglePasswordVisibility()"
+      >
+        {{ isPasswordVisible ? "visibility" : "visibility_off" }}
+      </span>
+    </div>
+    <span *ngIf="hasError" class="error-message">
+      {{ getNextError() }}
+    </span>
+  </div>
+</ng-template>

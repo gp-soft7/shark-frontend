@@ -1,0 +1,73 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.my-account-container
+  margin: auto
+  width: 1200px
+  margin-top: 50px
+  display: flex
+
+  @include phone
+    width: 100%
+    margin-top: 100px
+    padding: 0 20px
+
+// .sidebar
+//   width: 200px
+//   border-right: 1px solid $darkblue500
+//   padding-right: 20px
+
+// .sidebar-item
+//   display: flex
+//   align-items: center
+//   margin-bottom: 20px
+//   transition: all .2s ease
+//   cursor: pointer
+//   user-select: none
+
+//   &:hover
+//     color: $gray300
+
+//   & span
+//     font-size: 16px
+
+//   & span.material-icons
+//     margin-right: 10px
+
+// .sidebar-item--active
+//   color: $gray300
+//   pointer-events: none
+
+.content
+  width: 100%
+
+.data-item-list
+  display: flex
+  flex-wrap: wrap
+  margin-bottom: 40px
+
+.data-item
+  display: flex
+  flex-direction: column
+  margin-bottom: 20px
+  margin-right: 20px
+
+  & span:first-child
+    color: $gray150
+    font-size: 10px
+    text-transform: uppercase
+    font-weight: $mw
+    margin-bottom: 5px
+
+  & span:nth-child(2)
+    color: $gray200
+
+.shimmer-data-item
+  height: 30px
+  margin-bottom: 20px
+  margin-right: 20px
+
+.shimmer-sidebar-item
+  height: 16px
+  margin-bottom: 20px

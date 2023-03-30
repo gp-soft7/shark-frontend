@@ -1,0 +1,62 @@
+@import 'colors'
+
+.risk-management-container
+  margin: auto
+  width: 1200px
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+
+.risk-management-sections
+  display: flex
+  justify-content: space-between
+
+.risk-management-section
+  display: flex
+  justify-content: flex-start
+  flex-direction: column
+  margin-bottom: 50px
+  background: $darkblue200
+  padding-bottom: 10px
+  border-radius: 10px
+  border: 1px solid $darkblue500
+
+
+  &-header
+    display: flex
+    align-items: center
+    justify-content: space-between
+    border-bottom: 1px solid $darkblue500
+    margin-bottom: 10px
+    background: $darkblue350
+    padding: 10px 20px
+    height: 56px
+    border-top-left-radius: 10px
+    border-top-right-radius: 10px
+
+    & span
+      font-size: 16px
+      color: $gray300
+
+    & a
+      margin-bottom: 20px
+      margin-left: 20px
+
+  &-inputs
+    display: flex
+    justify-content: flex-start
+    padding: 10px 20px
+
+    & app-input
+      margin-right: 20px
+
+.risk-management-header
+  border-bottom: 1px solid $darkblue500
+  padding-bottom: 20px
+  margin-bottom: 30px
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+  & h2
+    margin-bottom: 0 !important

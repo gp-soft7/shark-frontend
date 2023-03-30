@@ -1,0 +1,73 @@
+@import 'colors'
+@import 'mixins/responsive'
+
+.modal-wrapper
+  position: fixed
+  left: 0
+  top: 0
+  width: 100vw
+  height: 100vh
+  background: rgba(0,0,0,.4)
+  z-index: 1000
+  display: flex
+  justify-content: center
+  align-items: center
+  overflow-y: auto
+
+  @include phone
+    padding: 0 20px
+
+.modal-container
+  background: $darkblue100
+  border-radius: 10px
+  width: 300px
+
+  @include phone
+    width: 100%
+
+.modal-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 20px 30px
+  border-bottom: 2px solid $darkblue500
+
+  & h3
+    margin-bottom: 0
+
+  &-close-button
+    font-size: 16px
+    color: $gray200
+    transition: all .2s ease
+    cursor: pointer
+
+    &:hover
+      color: $gray300
+
+.modal-content
+  padding: 20px 30px
+  font-size: 14px
+  line-height: 1.5em
+
+.modal-footer
+  padding: 20px 30px
+  padding-top: 0
+
+  &-button
+
+    & button
+      width: 100%
+      margin-bottom: 0 !important
+
+  &-buttons
+    display: flex
+    justify-content: space-between
+
+    & app-button
+      width: 100%
+
+    & button
+      margin-bottom: 0 !important
+
+    & app-button:first-child
+      margin-right: 4%

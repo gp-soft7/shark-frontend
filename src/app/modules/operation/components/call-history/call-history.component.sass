@@ -1,0 +1,112 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/display'
+
+.container
+  display: flex
+  margin-bottom: 20px
+  border-radius: 10px
+  padding: 5px 20px
+  padding-right: 10px
+  background: $darkblue300
+  border: 2px solid $darkblue500
+  overflow-x: auto
+  width: 100%
+
+.block
+  min-width: 40px
+  height: 30px
+  border-radius: 5px
+  padding: 0 5px
+
+.block-wrapper
+  height: 70px
+  display: flex
+  flex-direction: column
+  justify-content: flex-end
+  align-items: center
+  margin-right: 10px
+
+.separator-block
+
+  @include flex-center-horizontal
+  justify-content: center
+
+.crash-block
+  display: flex
+  justify-content: center
+  align-items: center
+  position: relative
+
+  & span
+    font-size: 12px
+    font-weight: $sw
+    color: $gray200
+
+  &-green
+    background: #04d47c
+
+    & span
+      color: #006d3f
+
+  &-black
+    background: hsla(0,0%,100%,.08)
+
+.double-block
+  display: flex
+  justify-content: center
+  align-items: center
+  position: relative
+  min-width: 20px
+
+  & span
+    font-size: 14px
+    font-weight: $sw
+    color: $gray300
+    border-radius: 50%
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 20px
+    height: 20px
+
+  &-red
+    background: #FD0E0E
+
+  &-black
+    background: #363a61
+
+  &-white
+    background: $gray300
+
+    & span
+      visibility: hidden
+
+.block-game-metadata
+  text-align: center
+  height: 20px
+  display: flex
+  flex-grow: 1
+  align-items: center
+  margin-top: 2px
+
+  & span
+    font-size: 9px
+    color: $gray200
+    font-weight: $sw
+    text-transform: uppercase
+    white-space: nowrap
+
+  & span:not(:first-child)
+    border-left: 1px solid $gray200
+    padding-left: 5px
+    margin-left: 5px
+
+.double-game-target
+  width: 12px
+  height: 12px
+  margin-left: 5px
+  border-radius: 3px
+
+.hidden
+  opacity: 0

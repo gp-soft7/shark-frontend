@@ -1,0 +1,444 @@
+<div class="control-panel-container">
+  <div class="section-operation">
+    <div
+      class="shimmer-operation-button shimmer"
+      *ngIf="canShowShimmer()"
+    ></div>
+
+    <div
+      (mouseenter)="isOperationButtonHovered = true"
+      (mouseleave)="isOperationButtonHovered = false"
+      *ngIf="isLoaded()"
+    >
+      <ng-container
+        *ngIf="
+          !hasBotStatus('STOPPED') &&
+          !hasBotStatus('STOP_GAIN') &&
+          !hasBotStatus('STOP_LOSS') &&
+          !hasBotStatus('ERRORED') &&
+          !hasBotStatus('STARTING') &&
+          isOperationButtonHovered
+        "
+      >
+        <div
+          class="operation-button operation-button--danger"
+          (click)="stopBot()"
+        >
+          <span class="material-icons"> close </span>
+          <p>Parar operações</p>
+          <small>{{ botTimerDuration }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          !hasBotStatus('STOPPED') &&
+          (hasBotStatus('STOP_GAIN') ||
+            hasBotStatus('STOP_LOSS') ||
+            hasBotStatus('ERRORED')) &&
+          isOperationButtonHovered
+        "
+      >
+        <div
+          class="operation-button operation-button--success"
+          (click)="startBot()"
+        >
+          <span class="material-icons"> power_settings_new </span>
+          <p>Retomar operações</p>
+          <small
+            *ngIf="botResetTimerDuration !== '' && !hasBotStatus('ERRORED')"
+            >O robô irá retomar automaticamente em
+            {{ botResetTimerDuration }}</small
+          >
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          (hasBotStatus('STOPPED') || hasBotStatus('STARTING')) &&
+          !isShowingOperatingResult
+        "
+      >
+        <div
+          class="operation-button"
+          [class.operation-button--disabled]="hasBotStatus('STARTING')"
+          [class.operation-button--glow]="hasBotStatus('STOPPED')"
+          (click)="startBot()"
+        >
+          <span class="material-icons"> power_settings_new </span>
+          <p>Iniciar operações</p>
+          <small>O robô está desligado atualmente</small>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          hasBotStatus('WAITING') &&
+          !isOperationButtonHovered &&
+          !isShowingOperatingResult
+        "
+      >
+        <div class="operation-button" (click)="startBot()">
+          <span
+            class="material-icons"
+            [@jello]="isOperationButtonIconJelling"
+            (@jello.done)="
+              isOperationButtonIconJelling = !isOperationButtonIconJelling
+            "
+          >
+            search
+          </span>
+          <p>Buscando entrada</p>
+          <small>{{ botTimerDuration }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          hasBotStatus('OPERATING') &&
+          !isOperationButtonHovered &&
+          !isShowingOperatingResult
+        "
+      >
+        <div class="operation-button">
+          <span class="material-icons"> more_horiz </span>
+          <p>
+            Operando
+            <ng-container *ngIf="operatingStrategyName"
+              >"{{ operatingStrategyName }}"</ng-container
+            >
+          </p>
+          <small>{{ botTimerDuration }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          hasBotStatus('STOP_GAIN') &&
+          !isOperationButtonHovered &&
+          !isShowingOperatingResult
+        "
+      >
+        <div class="operation-button">
+          <span class="material-icons"> check </span>
+          <p>Stop Gain</p>
+          <small *ngIf="botResetTimerDuration !== ''"
+            >Religando em {{ botResetTimerDuration }}</small
+          >
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          hasBotStatus('STOP_LOSS') &&
+          !isOperationButtonHovered &&
+          !isShowingOperatingResult
+        "
+      >
+        <div class="operation-button">
+          <span class="material-icons"> close </span>
+          <p>Stop Loss</p>
+          <small *ngIf="botResetTimerDuration !== ''"
+            >Religando em {{ botResetTimerDuration }}</small
+          >
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          hasBotStatus('ERRORED') &&
+          !isOperationButtonHovered &&
+          !isShowingOperatingResult
+        "
+      >
+        <div class="operation-button">
+          <span class="material-icons"> dangerous </span>
+          <p>Erro ao operar</p>
+          <small
+            >Ocorreu algum erro durante as operações. Verifique se sua conta
+            possui saldo.</small
+          >
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          hasBotStatus('TIME_RST') &&
+          !isOperationButtonHovered &&
+          !isShowingOperatingResult
+        "
+      >
+        <div class="operation-button">
+          <span class="material-icons"> hourglass_disabled </span>
+          <p>Aguardando</p>
+          <small
+            >O horário atual não será operado de acordo com seu gerenciamento de
+            risco.</small
+          >
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="!isOperationButtonHovered && isShowingOperatingResult"
+      >
+        <div class="operation-button">
+          <span class="material-icons">
+            {{ getOperationResultIcon() }}
+          </span>
+          <p>{{ getOperationResultLabel() }}</p>
+          <small>{{ botTimerDuration }}</small>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="operation-account" *ngIf="isLoaded()">
+      <div
+        class="operation-account-selector"
+        [class.operation-account-selector--selected]="accountType === 'DEMO'"
+        (click)="switchAccountType('DEMO')"
+      >
+        CONTA DEMO
+      </div>
+      <div
+        class="operation-account-selector"
+        [class.operation-account-selector--selected]="accountType === 'REAL'"
+        (click)="switchAccountType('REAL')"
+      >
+        CONTA REAL
+      </div>
+    </div>
+
+    <div
+      class="shimmer-operation-account shimmer"
+      *ngIf="canShowShimmer()"
+    ></div>
+
+    <div
+      class="mobile-show-sections"
+      *ngIf="responsitivy.isPhone"
+      (click)="canShowMobileSettings = !canShowMobileSettings"
+    >
+      <h4>Exibir configurações</h4>
+      <span class="material-icons" [@rotate]="canShowMobileSettings">
+        expand_more
+      </span>
+    </div>
+
+    <ng-container
+      *ngIf="
+        isLoaded() && (responsitivy.isPhone ? canShowMobileSettings : true)
+      "
+    >
+      <div class="section-card section-platform-connection-card">
+        <p class="section-card-title">Conexão com a plataforma</p>
+
+        <ng-container
+          *ngIf="!hasBlazeAccessToken; else elseHasBlazeAccessToken"
+        >
+          <p>
+            Você não está conectado<span class="material-icons"> close </span>
+          </p>
+          <app-button (onSafeClick)="openBlazeConnectionModal()"
+            >Conectar</app-button
+          >
+        </ng-container>
+
+        <ng-template #elseHasBlazeAccessToken>
+          <p>Você está conectado <span class="material-icons"> check </span></p>
+          <app-button
+            (onSafeClick)="disconnectFromBlaze()"
+            variant="outline-danger"
+            >DESCONECTAR</app-button
+          >
+        </ng-template>
+      </div>
+
+      <div class="section-card section-active-strategies-card">
+        <p class="section-card-title">Estratégias ativas</p>
+
+        <div class="active-strategies-list">
+          <ng-container
+            *ngIf="activeStrategies.length > 0; else noActiveStrategies"
+          >
+            <div
+              class="active-strategy-item"
+              *ngFor="let strategy of activeStrategies"
+            >
+              <div>
+                <span class="material-icons"> chevron_right </span>
+                <a [routerLink]="['/strategies', strategy.id]">{{
+                  strategy.name
+                }}</a>
+              </div>
+              <div class="active-strategy-item-platform">
+                <span class="material-icons"> pentagon </span>
+                <span>{{ strategy.platform }}</span>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #noActiveStrategies>
+            <span>Não há nenhuma estratégia ativa</span>
+          </ng-template>
+        </div>
+        <app-button variant="outline" [routerLink]="['/strategies']"
+          >Gerenciar estratégias</app-button
+        >
+      </div>
+    </ng-container>
+
+    <div class="shimmer-section-card shimmer" *ngIf="canShowShimmer()"></div>
+
+    <div class="shimmer-section-card shimmer" *ngIf="canShowShimmer()"></div>
+  </div>
+
+  <div class="section-stats">
+    <app-alert [isVisible]="accountType === 'REAL'"
+      >Você está operando em conta REAL
+    </app-alert>
+
+    <div class="shimmer-h4 shimmer" *ngIf="canShowShimmer()"></div>
+    <h4 *ngIf="isLoaded()">Resumo diário</h4>
+
+    <div
+      class="shimmer-stat-card-list shimmer-horizontal"
+      *ngIf="canShowShimmer()"
+    >
+      <div class="shimmer-stat-card shimmer"></div>
+      <div class="shimmer-stat-card shimmer"></div>
+      <div class="shimmer-stat-card shimmer"></div>
+      <div class="shimmer-stat-card shimmer"></div>
+    </div>
+
+    <div class="stat-card-list" *ngIf="isLoaded()">
+      <div class="section-card stat-card">
+        <p>Saldo total</p>
+        <span *ngIf="accountType === 'DEMO'">{{
+          operationSummary.totalBalance | currency : "BRL"
+        }}</span>
+        <span *ngIf="accountType === 'REAL'">{{ blazeRealBalance }} </span>
+      </div>
+      <div class="section-card stat-card">
+        <div>
+          <p>Resultado</p>
+          <small
+            *ngIf="
+              operationSummary.resultBalance !== 0 && balancePercentage !== 0
+            "
+            [class.positive]="operationSummary.resultBalance > 0"
+            [class.negative]="operationSummary.resultBalance < 0"
+            ><small class="material-icons">
+              {{ balancePercentage > 0 ? "trending_up" : "trending_down" }}
+            </small>
+            {{ balancePercentage | percent : "1.2-2" }}
+          </small>
+        </div>
+
+        <span
+          ><ng-container *ngIf="operationSummary.resultBalance !== 0">{{
+            operationSummary.resultBalance > 0 ? "+ " : "- "
+          }}</ng-container>
+          {{
+            operationSummary.resultBalance | absolute | currency : "BRL"
+          }}</span
+        >
+      </div>
+      <div class="section-card stat-card">
+        <p>Operações</p>
+        <span>{{ operationSummary.operationCount }}</span>
+      </div>
+      <div class="section-card stat-card">
+        <p>Placar</p>
+        <span
+          >{{ operationSummary.score.wins }}x{{
+            operationSummary.score.losses
+          }}</span
+        >
+      </div>
+    </div>
+
+    <ng-container *ngIf="canShowShimmer()">
+      <div class="shimmer-horizontal shimmer-action-buttons">
+        <div class="shimmer-action-button shimmer"></div>
+        <div class="shimmer-action-button shimmer"></div>
+        <div class="shimmer-action-button shimmer"></div>
+      </div>
+      <div class="shimmer-vertical">
+        <div class="shimmer-call-card shimmer"></div>
+        <div class="shimmer-call-card shimmer"></div>
+        <div class="shimmer-call-card shimmer"></div>
+        <div class="shimmer-call-card shimmer"></div>
+        <div class="shimmer-call-card shimmer"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isLoaded()">
+      <div class="section-header" [style.width]="'500px'">
+        <h4>Últimos registros</h4>
+        <div class="action-buttons">
+          <div
+            class="action-button"
+            (click)="openViewCallsModal()"
+            *ngIf="!responsitivy.isPhone"
+          >
+            <span class="material-icons"> bar_chart </span>
+            Ver todas as operações
+          </div>
+
+          <div
+            class="action-button"
+            (click)="tryDeleteCalls()"
+            *ngIf="accountType !== 'REAL'"
+          >
+            <span class="material-icons"> delete_forever </span>
+            Excluir operações
+          </div>
+        </div>
+      </div>
+      <div class="record-list" *ngIf="records.length > 0; else noCalls">
+        <ng-container *ngFor="let record of records">
+          <app-event-card *ngIf="record.event" [record]="record">
+          </app-event-card>
+
+          <app-call-card
+            *ngIf="record.call"
+            [record]="record"
+            [modalCallDetailsComponent]="modalCallDetailsComponent"
+          ></app-call-card>
+        </ng-container>
+      </div>
+
+      <ng-template #noCalls>
+        <div class="no-calls">
+          <p>Não há nenhum registro a ser exibido.</p>
+        </div></ng-template
+      >
+    </ng-container>
+  </div>
+</div>
+
+<div
+  class="retrieved-wrapper"
+  *ngIf="isBotRetrieved"
+  [@fadeInOnEnter]
+  [@fadeOutOnLeave]
+>
+  <div class="retrieved-container">
+    <h3>Você foi desconectado</h3>
+    <p>
+      O painel de controle foi aberto em outra janela ou navegador. Clique em
+      "usar aqui" para continuar nesta janela.
+    </p>
+
+    <div class="retrieved-container-buttons">
+      <app-button variant="outline" (click)="retrieveBot()"
+        >Usar aqui</app-button
+      >
+    </div>
+  </div>
+</div>
+
+<app-modal-view-calls
+  [modalCallDetailsComponent]="modalCallDetailsComponent"
+></app-modal-view-calls>
+<app-modal-blaze-connection></app-modal-blaze-connection>
+<app-modal-call-details></app-modal-call-details>

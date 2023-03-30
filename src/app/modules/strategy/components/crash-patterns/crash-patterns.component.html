@@ -1,0 +1,178 @@
+<div class="container">
+  <div class="pattern-list">
+    <div
+      class="pattern-item"
+      *ngFor="let pattern of patterns; let patternIndex = index"
+    >
+      <div class="pattern-item-header">
+        <span class="pattern-item-header-title"
+          >Padrão {{ patternIndex + 1 }}</span
+        >
+
+        <button (click)="duplicatePattern({ patternIndex })">
+          <span class="material-icons"> content_copy </span>Duplicar
+        </button>
+        <button (click)="deletePattern({ patternIndex })">
+          <span class="material-icons"> delete_forever </span>Excluir
+        </button>
+
+        <div
+          class="pattern-item-header-target"
+          (click)="openPatternTargetConfig({ patternIndex })"
+        >
+          <span class="material-icons"> trending_up </span>
+          Alvo:
+
+          <input
+            class="pattern-item-header-target-input"
+            appOnlyNumbers
+            type="text"
+            autoSizeInput
+            [minWidth]="20"
+            [maxWidth]="100"
+            [defaultValue]="pattern.target"
+            (change)="onPatternItemTargetInputChange($event, { patternIndex })"
+            (focus)="resetInputValueOnFocus($event)"
+          />
+        </div>
+
+        <app-dropdown
+          *ngIf="responsitivy.isPhone"
+          [items]="dropdownItems"
+          [handlerParams]="{ patternIndex }"
+        >
+          <span class="material-icons"> more_vert </span>
+        </app-dropdown>
+      </div>
+
+      <!-- TODO: remove hardcoded style -->
+      <div class="pattern-item-list">
+        <div
+          style="position: relative"
+          *ngFor="
+            let patternItem of pattern.pattern;
+            let patternItemIndex = index
+          "
+        >
+          <div
+            class="pattern-item-list-item"
+            [class.block-black]="patternItem.color === 'black' || !patternItem.color"
+            [class.block-green]="patternItem.color === 'green'"
+            [class.block-focus]="isPatternItemConfigOpen({ patternIndex, patternItemIndex})"
+            (click)="openPatternItemConfig({ patternIndex, patternItemIndex }); $event.stopPropagation()"
+          >
+            <span *ngIf="patternItem.conditional">
+              {{ patternItem.conditional }}</span
+            >
+          </div>
+          <div
+            #tooltipElement
+            class="pattern-config-tooltip"
+            *ngIf="isPatternItemConfigOpen({ patternIndex, patternItemIndex})"
+          >
+            <span class="title">Velas positivas/negativas</span>
+
+            <div class="pattern-config-tooltip-shortcuts">
+              <div
+                class="pattern-config-tooltip-button color block-black"
+                (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'black')
+              "
+              ></div>
+              <div
+                class="pattern-config-tooltip-button color block-green"
+                (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'green')
+              "
+              ></div>
+            </div>
+
+            <span class="title">Velas condicionais</span>
+
+            <div class="pattern-config-tooltip-conditionals">
+              <div
+                class="pattern-config-tooltip-conditional tooltip top"
+                data-tooltip="Maior ou igual"
+                (click)="changePatternItemConditional({ patternIndex, patternItemIndex }, '>', patternConditionalValueElement.value)"
+              >
+                <span>></span>
+              </div>
+              <div
+                class="pattern-config-tooltip-conditional tooltip top"
+                data-tooltip="Menor ou igual"
+                (click)="changePatternItemConditional({ patternIndex, patternItemIndex }, '<', patternConditionalValueElement.value)"
+              >
+                <span><</span>
+              </div>
+              <div
+                class="pattern-config-tooltip-conditional tooltip top"
+                data-tooltip="Igual"
+                (click)="changePatternItemConditional({ patternIndex, patternItemIndex }, '=', patternConditionalValueElement.value)"
+              >
+                <span>=</span>
+              </div>
+              <span class="separator">a</span>
+              <input
+                type="text"
+                autoSizeInput
+                appOnlyNumbers
+                #patternConditionalValueElement
+                [defaultValue]="'2'"
+                (focus)="resetInputValueOnFocus($event)"
+              />
+            </div>
+
+            <span class="title">Intervalo de Velas</span>
+
+            <div
+              class="pattern-config-tooltip-conditionals pattern-config-tooltip-range"
+            >
+              <input
+                type="text"
+                autoSizeInput
+                appOnlyNumbers
+                #patternRangeStartValueElement
+                [defaultValue]="'2'"
+                (focus)="resetInputValueOnFocus($event)"
+              />
+              <span class="separator">Até</span>
+              <input
+                type="text"
+                autoSizeInput
+                appOnlyNumbers
+                #patternRangeEndValueElement
+                [defaultValue]="'3'"
+                (focus)="resetInputValueOnFocus($event)"
+              />
+              <div
+                class="pattern-config-tooltip-conditional"
+                (click)="changePatternItemConditionalRange({ patternIndex, patternItemIndex }, patternRangeStartValueElement.value, patternRangeEndValueElement.value)"
+              >
+                <span style="font-size: 12px">OK</span>
+              </div>
+            </div>
+
+            <span
+              class="delete-button"
+              (click)="deletePatternItem({ patternIndex, patternItemIndex })"
+            >
+              <span class="material-icons"> delete_forever </span> Remover
+            </span>
+          </div>
+        </div>
+
+        <span
+          (click)="addPatternListItem({ patternIndex })"
+          class="pattern-item-list-add-button material-icons"
+        >
+          add
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-pattern-button" (click)="addPattern()">
+    <span class="material-icons"> add </span>
+    Adicionar novo padrão
+  </div>
+</div>

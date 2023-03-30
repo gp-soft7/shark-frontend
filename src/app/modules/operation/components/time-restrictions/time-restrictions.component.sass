@@ -1,0 +1,86 @@
+@import 'colors'
+@import 'mixins/responsive'
+
+.container
+  display: flex
+  justify-content: space-between
+  user-select: none
+
+  @include phone
+    justify-content: start
+    flex-direction: column
+
+.white-list, .black-list
+  margin-top: 10px
+  margin-bottom: 30px
+
+.check-box
+  display: flex
+  align-items: center
+  cursor: pointer
+
+  & input
+    margin-right: 8px
+
+.time-item-list
+  margin-top: 10px
+
+.time-item
+  align-items: center
+  margin-bottom: 10px
+
+.time-item-row
+  display: flex
+  align-items: center
+
+.time-item-error
+  color: $lightorange300
+  font-size: 12px
+
+.time-item-actions
+  margin-left: 10px
+
+  & span
+    display: flex
+    align-items: center
+    color: $lightorange300
+    cursor: pointer
+
+    & span.material-icons
+      font-size: 14px
+      margin-right: 5px
+
+.time-item-range
+  display: flex
+  align-items: center
+
+  & span
+    margin: 0 10px
+
+  & input
+    border: 1px solid $darkblue600
+    background: $darkblue300
+    border-radius: 10px
+    width: 82px
+    color: $gray300
+
+    &:focus
+      border-color: $primary300
+
+.add-button
+  display: flex
+  user-select: none
+  align-items: center
+  cursor: pointer
+  transition: all .2s ease
+
+  &:hover
+    color: $gray300
+
+  & span
+    font-size: 16px
+    margin-right: 10px
+
+.has-disabled
+  opacity: .3
+  pointer-events: none

@@ -1,0 +1,21 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>{{ params.title }}</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      {{ params.text }}
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-footer-button">
+        <app-button (onSafeClick)="close()" variant="outline">FECHAR</app-button>
+      </div>
+    </div>
+  </div>
+</div>

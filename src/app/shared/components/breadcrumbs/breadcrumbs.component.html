@@ -1,0 +1,13 @@
+<div class="container">
+  <span
+    class="breadcrumb"
+    *ngFor="let breadcrumbs of currentBreadcrumbs; let index = index"
+    [class.breadcrumb--active]="isLastBreadcrumb(index)"
+  >
+    <a [routerLink]="getAbsoluteRoute(index)">{{ breadcrumbs }}</a>
+
+    <span *ngIf="!isLastBreadcrumb(index)" class="material-icons">
+      chevron_right
+    </span>
+  </span>
+</div>

@@ -1,0 +1,52 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.wrapper
+  display: flex
+  align-items: center
+  margin-bottom: 20px
+
+  input[type='checkbox']
+    margin-right: 10px
+
+  @include phone
+    align-items: flex-start
+
+.container
+  display: flex
+  align-items: center
+
+  @include phone
+    flex-wrap: wrap
+    width: 100%
+
+    & span, & div
+      margin-bottom: 20px
+
+.input
+  margin: 0 15px
+  border: 1px solid $darkblue500
+  background: $darkblue500
+  padding: 0 10px
+  font-size: 14px
+  border-radius: 10px
+  height: 30px
+  display: flex
+  align-items: center
+  cursor: pointer
+
+  & input
+    color: $gray300
+    height: auto
+    padding: initial
+    margin-right: 5px
+    border-radius: 0px
+
+.has-focus
+
+  border-color: $primary300
+
+.has-disabled
+  opacity: .3
+  pointer-events: none

@@ -1,0 +1,32 @@
+<div class="container">
+  <section style="width: 300px">
+    <h3>Pegar id de usuário por email</h3>
+    <app-input
+      name="userEmail"
+      [form]="form"
+      placeholder="Digite o email"
+      label="Email"
+      (keydown.enter)="getUserIdByEmail()"
+    ></app-input>
+    <app-button (onSafeClick)="getUserIdByEmail()" [enableLoading]="true"
+      >Pegar</app-button
+    >
+    <table *ngIf="getUserIdByEmailResult !== null">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Email</th>
+          <th>CPF</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>{{ getUserIdByEmailResult.id }}</td>
+          <td>{{ getUserIdByEmailResult.email }}</td>
+          <td>{{ getUserIdByEmailResult.cpf }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

@@ -1,0 +1,46 @@
+@import 'colors'
+
+@keyframes shimmer
+  0%
+    background-position: -400px 0
+
+  100%
+    background-position: 400px 0
+
+$c1: $darkblue200
+$c2: $darkblue300
+$c3: $darkblue400
+
+.shimmer
+  position: relative
+  background: $c1
+  background-image: linear-gradient(to right, $c1 0%, $c2 10%, $c3 20%, $c2 30%, $c1 50%, $c1 100%)
+  background-repeat: no-repeat
+  background-size: 800px 200px
+  animation-duration: 1s
+  animation-fill-mode: forwards
+  animation-iteration-count: infinite
+  animation-name: shimmer
+  animation-timing-function: ease-in-out
+  border-radius: 10px
+
+.shimmer-h2
+  height: 24px
+  margin-bottom: 20px
+
+.shimmer-h3
+  height: 18px
+  margin-bottom: 20px
+
+.shimmer-h4
+  height: 14px
+  margin-bottom: 20px
+
+.shimmer-horizontal
+  display: flex
+  flex-wrap: wrap
+
+.shimmer-vertical
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap

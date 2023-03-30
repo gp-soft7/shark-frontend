@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="game-list">
+    <div
+      class="game"
+      *ngFor="let game of games"
+      [class.block-red]="game.color === 1"
+      [class.block-black]="game.color === 2"
+      [class.block-white]="game.color === 0"
+    >
+      {{ game.roll }}
+    </div>
+  </div>
+
+  <button (click)="addRedGame()">RED</button>
+  <button (click)="addBlackGame()">BLACK</button>
+  <button (click)="addWhiteGame()">WHITE</button>
+</div>

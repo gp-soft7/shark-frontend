@@ -1,0 +1,89 @@
+@import 'colors'
+@import 'fonts'
+
+button
+  border-radius: 5px
+  border: none
+  height: 40px
+  font-family: $bf
+  font-weight: $mw
+  text-transform: uppercase
+  font-size: 14px
+  cursor: pointer
+  transition: all .2s ease
+  user-select: none
+  display: flex
+  align-items: center
+  justify-content: center
+  pointer-events: auto
+  padding: 0 20px
+
+  &:disabled
+    cursor: not-allowed
+    pointer-events: none
+
+  &:active
+    transform: translateX(1px) translateY(1px)
+
+.button-primary
+  background: $primary300
+  color: $gray300
+
+  &:disabled
+    background: $primary100
+    color: $gray100
+
+  &:hover
+    background: $primary200
+
+.button-outline
+  background: transparent
+  color: $gray300
+  border: 1px solid $primary300
+
+  &:disabled
+    background: $primary100
+    color: $gray100
+
+  &:hover
+    background: $primary200
+    border-color: $primary200
+
+.button-outline-danger
+  background: transparent
+  color: $gray300
+  border: 1px solid $lightorange300
+
+  &:disabled
+    background: $primary100
+    color: $gray100
+
+  &:hover
+    background: $lightorange300
+
+.button-outline-tiny
+  background: transparent
+  color: $gray300
+  border: 1px solid $primary300
+  height: 30px
+  font-size: 12px
+
+  &:disabled
+    background: $primary100
+    color: $gray100
+
+  &:hover
+    background: $primary200
+    border-color: $primary200
+
+.button-primary-tiny
+  background: $primary300
+  color: $gray300
+  height: 30px
+
+  &:disabled
+    background: $primary100
+    color: $gray100
+
+  &:hover
+    background: $primary200

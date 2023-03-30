@@ -1,0 +1,45 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Adicionar Gatilho de Entrada</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <div class="trigger-card-list">
+        <div class="trigger-card">
+          <div class="trigger-card-icon">
+            <span class="material-icons"> pattern </span>
+          </div>
+          <div class="trigger-card-content">
+            <h3>Padrões</h3>
+            <span>Crie diferentes combinações de padrões</span>
+          </div>
+        </div>
+
+        <div class="trigger-card">
+          <div class="trigger-card-icon">
+            <span class="material-icons"> alarm </span>
+          </div>
+          <div class="trigger-card-content">
+            <h3>Horário</h3>
+            <span>Defina entradas pelo horário</span>
+          </div>
+        </div>
+
+        <div class="trigger-card">
+          <div class="trigger-card-icon">
+            <span class="material-icons"> dashboard_customize </span>
+          </div>
+          <div class="trigger-card-content">
+            <h3>Customizado</h3>
+            <span>Crie entradas customizadas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

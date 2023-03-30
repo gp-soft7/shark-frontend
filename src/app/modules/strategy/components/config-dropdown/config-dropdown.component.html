@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="header" (click)="isOpen ? close() : open()">
+    <div class="header-title">
+      <h4>{{ title }}</h4>
+
+      <!-- <a class="tip" *ngIf="tip" [routerLink]="tip.route">{{ tip.text }}</a> -->
+    </div>
+    <span class="material-icons" [@rotate]="isOpen" > expand_more </span>
+  </div>
+
+  <div class="content" [@collapse]="!isOpen">
+    <ng-content></ng-content>
+  </div>
+</div>

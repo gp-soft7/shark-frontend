@@ -1,0 +1,216 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.container
+  margin-top: 40px
+
+.add-pattern-button
+  display: flex
+  user-select: none
+  align-items: center
+  cursor: pointer
+  transition: all .2s ease
+
+  &:hover
+    color: $gray300
+
+  & span
+    font-size: 16px
+    margin-right: 10px
+
+.pattern-list
+  display: flex
+  flex-direction: column
+
+.pattern-item
+  margin-bottom: 20px
+  background: $darkblue200
+  border: 1px solid $darkblue500
+  border-radius: 5px
+
+  @include phone
+    width: 100%
+
+  &-header
+    display: flex
+    align-items: center
+    margin-bottom: 20px
+    border-bottom: 1px solid $darkblue500
+    padding: 10px 20px
+    background: $darkblue350
+
+    @include phone
+      justify-content: space-between
+
+    &-title
+      font-weight: $sw
+      color: $gray300
+      margin-right: 40px
+      font-size: 16px
+
+      @include phone
+        font-size: 14px
+        margin: 0
+
+    &-target
+      position: relative
+      height: 35px
+      border-radius: 10px
+      background: $darkblue500
+      border: 1px solid $darkblue500
+      color: $gray300
+      font-weight: $rw
+      display: flex
+      align-items: center
+      padding: 0 15px
+      margin-right: 10px
+      transition: all .2s ease
+      cursor: pointer
+      user-select: none
+      margin-left: 30px
+      font-size: 14px
+      border: 1px solid $darkblue500
+
+      @include phone
+        margin: 0
+
+      &-color
+        width: 20px
+        height: 20px
+        border-radius: 5px
+        margin-left: 10px
+
+      &:hover
+        border-color: $primary200
+
+      & span
+        font-size: 18px
+        margin-right: 5px
+
+    & button
+      height: 35px
+      border-radius: 10px
+      background: $darkblue500
+      border: 1px solid $darkblue500
+      color: $gray200
+      font-family: $bf
+      font-size: 14px
+      font-weight: $rw
+      display: flex
+      align-items: center
+      padding: 0 15px
+      margin-right: 10px
+      transition: all .2s ease
+      cursor: pointer
+      user-select: none
+
+      @include phone
+        display: none
+
+      &:active
+        transform: translateX(1px) translateY(1px)
+
+      &:hover
+        color: $gray300
+        border-color: $primary200
+
+      & span
+        font-size: 18px
+        margin-right: 5px
+
+  &-list
+    display: flex
+    align-items: center
+    flex-wrap: wrap
+    padding: 10px 20px
+
+    &-add-button
+      transition: all .2s ease
+      font-size: 32px
+      user-select: none
+      cursor: pointer
+      transform: translateY(-10px)
+
+      &:hover
+        color: $gray300
+
+    &-item
+      width: 55px
+      height: 55px
+      z-index: 1
+      border-radius: 5px
+      margin: 0 20px 20px 0
+      cursor: pointer
+      position: relative
+      display: flex
+      justify-content: center
+      align-items: center
+      color: $gray300
+      font-size: 20px
+      font-weight: $sw
+
+.block-red
+  background: #FD0E0E
+  border: 1px solid #f82626
+
+.block-random
+  background: #0e76fd
+  border: 1px solid #006ffe
+
+.block-black
+  background: $darkblue600
+  border: 1px solid #363a61
+
+.block-white
+  background: $gray300
+  border: 1px solid #999
+
+.block-focus
+  border-color: $gray300
+
+.pattern-config-tooltip
+  position: absolute
+  display: flex
+  top: 0
+  left: 50%
+  transform: translateX(-50%) translateY(calc(-100% - 15px))
+  background: $darkblue350
+  border: 2px solid $darkblue500
+  padding: 10px
+  border-radius: 10px
+  z-index: 10
+
+  &:after
+    left: 50%
+    bottom: 0
+    transform: translateY(9px) translateX(-50%)
+
+  & div
+    width: 30px
+    height: 30px
+    border-radius: 5px
+    margin: 0 5px
+
+  & select
+    background: $darkblue600
+    color: $gray300
+    border: none
+    margin-left: 10px
+    width: 37px
+
+  &-button:not(.color)
+    display: flex
+    justify-content: center
+    align-items: center
+    background: $darkblue600
+    color: $gray300
+    transition: all .2s ease
+    cursor: pointer
+    user-select: none
+
+    &:active
+      transform: translateX(1px) translateY(1px)
+
+    &:hover
+      background: $darkblue400

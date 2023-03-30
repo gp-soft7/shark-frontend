@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="list-section">
+    <div>
+      <h2>Minhas estratégias</h2>
+      <!-- <p>Aqui você pode visualizar suas estratégias, editá-las e excluí-las.</p> -->
+    </div>
+    <app-button variant="outline" [routerLink]="['create']"
+      >Criar nova estratégia</app-button
+    >
+  </div>
+  <div class="shimmer strategy-count shimmer" *ngIf="canShowShimmer()"></div>
+  <div class="strategy-count" *ngIf="isLoaded()">
+    <span>{{ strategies.length }} de 20 estratégias disponíveis</span>
+  </div>
+
+  <div class="shimmer-horizontal" *ngIf="canShowShimmer()">
+    <div
+      class="shimmer-strategy-card shimmer"
+      *ngFor="let width of shimmerStrategyCardWidths"
+      [style.width]="width + 'px'"
+    ></div>
+  </div>
+
+  <div class="strategy-list" *ngIf="isLoaded()">
+    <div
+      class="strategy-card"
+      *ngFor="let strategy of strategies; let index = index"
+      (mouseenter)="visibleStrategies[index] = true"
+      (mouseleave)="visibleStrategies[index] = false"
+    >
+      <div
+        class="strategy-card-info"
+        [routerLink]="['/strategies', strategy.id]"
+      >
+        <span class="strategy-card-info-name"> {{ strategy.name }}</span>
+        <span class="strategy-card-info-game">
+          <span class="material-icons">
+            {{ getStrategyGameIcon(strategy.game) }}
+          </span>
+          {{ strategy.game }}</span
+        >
+        <span class="strategy-card-info-platform">
+          <span class="material-icons"> pentagon </span>
+          {{ strategy.platform }}</span
+        >
+        <span
+          class="strategy-card-info-status"
+          [class.status-activated]="strategy.active"
+        >
+          <span class="material-icons">
+            {{ strategy.active ? "check" : "close" }}
+          </span>
+          {{ strategy.active ? "Ativada" : "Desativada" }}
+        </span>
+      </div>
+      <div class="strategy-card-actions">
+        <app-dropdown
+          [items]="
+            strategy.active
+              ? activatedCardDropdownItems
+              : deactivatedCardDropdownItems
+          "
+          [handlerParams]="{
+            id: strategy.id
+          }"
+        >
+          <button
+            [style.opacity]="
+              visibleStrategies[index] || responsitivy.isPhone ? 1 : 0
+            "
+          >
+            <span class="material-icons"> expand_more </span>
+          </button>
+        </app-dropdown>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="container">
+  <app-alert>
+    Banca mínima recomendada (aproximação):
+    {{
+      minimumWallet > 1000000
+        ? "> R$ 1.000.000,00"
+        : (minimumWallet | currency : "BRL")
+    }}
+  </app-alert>
+
+  <app-config-dropdown
+    title="Martingale"
+    [tip]="{ text: 'O que é martingale?', route: ['#'] }"
+  >
+    <div class="input-container">
+      <app-input
+        [form]="form"
+        type="checkbox"
+        name="enableMartingale"
+        label="Ativar"
+      ></app-input>
+    </div>
+    <div
+      class="input-activation-box"
+      [class.input-activation-box--enabled]="isMartingaleEnabled"
+    >
+      <div class="input-container">
+        <app-martingale-multipliers
+          [form]="form"
+          customMultipliersControl="martingaleCustomMultipliers"
+          multiplierCountControl="martingaleMultiplierCount"
+        ></app-martingale-multipliers>
+      </div>
+
+      <div class="input-container">
+        <app-input
+          [form]="form"
+          type="checkbox"
+          name="martingaleDoNextCallOnly"
+          label="Fazer martingale no próximo sinal da estratégia"
+        ></app-input>
+      </div>
+    </div>
+  </app-config-dropdown>
+
+  <app-config-dropdown
+    title="Soros"
+    [tip]="{ text: 'O que é soros?', route: ['#'] }"
+  >
+    <div class="input-container">
+      <app-input
+        [form]="form"
+        type="checkbox"
+        name="enableSoros"
+        label="Ativar"
+      ></app-input>
+    </div>
+    <div
+      class="input-activation-box"
+      [class.input-activation-box--enabled]="isSorosEnabled"
+    >
+      <div class="input-container">
+        <app-input
+          [form]="form"
+          type="number-resizable"
+          name="sorosHandCount"
+          label="Quantidade de mãos de soros:"
+          rightText="Soros"
+          [minWidth]="20"
+        ></app-input>
+        <app-input
+          [form]="form"
+          type="number-resizable"
+          name="sorosProfitPercentage"
+          label="Porcentagem do lucro:"
+          rightText="%"
+          [minWidth]="20"
+        ></app-input>
+      </div>
+
+      <div class="input-container">
+        <app-input
+          [form]="form"
+          type="checkbox"
+          name="sorosDoWithProfitOnly"
+          label="Entrar apenas com o lucro"
+        ></app-input>
+      </div>
+    </div>
+  </app-config-dropdown>
+
+  <app-config-dropdown title="Sorosgale">
+    <div class="input-container">
+      <app-input
+        [form]="form"
+        type="checkbox"
+        name="enableSorosgale"
+        label="Ativar"
+      ></app-input>
+    </div>
+    <div
+      class="input-activation-box"
+      [class.input-activation-box--enabled]="isSorosgaleEnabled"
+    >
+      <div class="input-container">
+        <app-input
+          [form]="form"
+          type="number-resizable"
+          name="sorosgaleHandCount"
+          label="Quantidade de mãos de sorosgale:"
+          rightText="Sorosgales"
+          [minWidth]="20"
+        ></app-input>
+        <app-input
+          [form]="form"
+          type="number-resizable"
+          name="sorosgaleMultiplier"
+          label="Multiplicador:"
+          rightText="X"
+          [minWidth]="20"
+        ></app-input>
+      </div>
+    </div>
+  </app-config-dropdown>
+</div>

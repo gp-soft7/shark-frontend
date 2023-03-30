@@ -1,0 +1,108 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Operações realizadas (Conta {{ params.accountType }})</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <div class="operation-info-wrapper" >
+        <div class="operation-info" *ngIf="records">
+          <small>Resumo no período</small>
+
+          <div class="operation-card-row" >
+            <div class="operation-card">
+              <p>Resultado</p>
+              <span>{{ records.summary.resultBalance | currency: "BRL" }}</span>
+            </div>
+            <div class="operation-card">
+              <p>Placar</p>
+              <span
+                >{{ records.summary.score.wins }}x{{
+                  records.summary.score.losses
+                }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="operation-info">
+          <small>Período</small>
+
+          <div class="operation-card-row">
+            <div class="filter-input">
+              <label for="startDate">Data inicial</label>
+              <input
+                id="startDate"
+                [(ngModel)]="startDate"
+                (ngModelChange)="onStartDateChange($event)"
+                [dpDayPicker]="dayPickerConfiguration"
+              />
+            </div>
+            <div class="filter-input">
+              <label for="endDate">Data final</label>
+              <input
+                id="endDate"
+                [(ngModel)]="endDate"
+                (ngModelChange)="onEndDateChange($event)"
+                [dpDayPicker]="dayPickerConfiguration"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="record-list"
+        *ngIf="records && records.count > 0; else noCalls"
+      >
+        <ng-container *ngFor="let record of records.data">
+          <app-event-card *ngIf="record.event" [record]="record">
+          </app-event-card>
+          <app-call-card
+            *ngIf="record.call"
+            [record]="record"
+            [modalCallDetailsComponent]="modalCallDetailsComponent"
+          ></app-call-card>
+        </ng-container>
+      </div>
+
+      <div class="pagination-footer" *ngIf="records && records.count > 0">
+        <span class="pagination-footer-entries">{{ range }}</span>
+        <div class="page-list">
+          <div
+            class="page-item"
+            [class.page-item--disabled]="!records.hasPreviousPage"
+            (click)="previousPage()"
+          >
+            <span class="material-icons"> chevron_left </span>
+          </div>
+          <div
+            class="page-item"
+            *ngFor="let page of pages; let index = index"
+            [class.page-item--selected]="records.page === page"
+            (click)="changePage(page, index)"
+          >
+            <span>{{ page }}</span>
+          </div>
+          <div
+            class="page-item"
+            [class.page-item--disabled]="!records.hasNextPage"
+            (click)="nextPage()"
+          >
+            <span class="material-icons"> chevron_right </span>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noCalls>
+        <span
+          >Não há nenhuma operação realizada no período especificado.</span
+        ></ng-template
+      >
+    </div>
+  </div>
+</div>

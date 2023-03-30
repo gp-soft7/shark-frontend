@@ -1,0 +1,21 @@
+<div class="dropdown-wrapper" (click)="toggle()">
+  <ng-content></ng-content>
+  <div
+    *ngIf="isOpen"
+    #dropdownContainer
+    class="dropdown-container"
+    [@fadeInOnEnter]
+    [@fadeOutOnLeave]
+  >
+    <div class="dropdown-item-list">
+      <div
+        class="dropdown-item"
+        *ngFor="let item of items"
+        (click)="item.handler(handlerParams)"
+      >
+        <span class="material-icons"> {{ item.icon }} </span>
+        <span>{{ item.text }}</span>
+      </div>
+    </div>
+  </div>
+</div>

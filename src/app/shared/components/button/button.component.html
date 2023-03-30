@@ -1,0 +1,13 @@
+<button
+  [type]="type"
+  [disabled]="disabled || isLoading"
+  [attr.class]="'button-' + variant"
+  [style.width]="width ?? '100%'"
+  (click)="click()"
+>
+  <ng-container *ngIf="enableLoading && isLoading; else elseNoLoading"
+    >...</ng-container
+  >
+
+  <ng-template #elseNoLoading><ng-content></ng-content></ng-template>
+</button>

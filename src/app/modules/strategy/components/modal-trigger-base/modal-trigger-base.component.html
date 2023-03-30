@@ -1,0 +1,28 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Gatilho Padrões</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <app-input
+        name="name"
+        [form]="form"
+        label="Nome do gatilho"
+        [inputWidth]="'100%'"
+      ></app-input>
+
+      <ng-content></ng-content>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-footer-button">
+        <app-button>Salvar Gatilho</app-button>
+      </div>
+    </div>
+  </div>
+</div>

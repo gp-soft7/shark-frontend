@@ -1,0 +1,145 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Detalhes da Operação</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <ng-container *ngIf="canShowShimmer()">
+        <div class="shimmer shimmer-h4"></div>
+        <div class="shimmer" style="height: 106px; margin-bottom: 20px"></div>
+        <div class="shimmer shimmer-h4"></div>
+        <div class="shimmer" style="height: 54px; margin-bottom: 20px"></div>
+        <div class="shimmer shimmer-h4"></div>
+        <div class="shimmer" style="height: 97px; margin-bottom: 20px"></div>
+      </ng-container>
+
+      <ng-container *ngIf="isLoaded() && call">
+        <h4>Geral</h4>
+
+        <div class="detail-row">
+          <div class="detail">
+            <span>Plataforma</span>
+            <span>{{ call.platform }}</span>
+          </div>
+
+          <div class="detail">
+            <span>Jogo</span>
+            <span>{{ call.game }}</span>
+          </div>
+
+          <div class="detail">
+            <span>Data</span>
+            <span>{{ call.createdAt | date : "dd/MM HH:mm" }}</span>
+          </div>
+
+          <div class="detail">
+            <span>Estratégia</span>
+            <span>"{{ call.strategyName }}"</span>
+          </div>
+
+          <div class="detail">
+            <span>Conta</span>
+            <span>{{ call.accountType }}</span>
+          </div>
+
+          <div class="detail">
+            <span>Resultado</span>
+            <span>
+              {{ call.result > 0 ? "+" : "-" }}
+              {{ call.result | absolute | currency : "BRL" }}</span
+            >
+          </div>
+
+          <div class="detail">
+            <span>Duração</span>
+            <span> {{ call.duration }} </span>
+          </div>
+        </div>
+
+        <h4>Apostas</h4>
+
+        <div class="detail-row">
+          <div class="detail">
+            <span>
+              {{
+                call.misc.betHistory.length > 1
+                  ? "Apostas realizadas"
+                  : "Aposta realizada"
+              }}</span
+            >
+            <span>{{ getCallMiscBetHistory(call.misc.betHistory) }}</span>
+          </div>
+
+          <div class="detail" *ngIf="call.misc.whiteProtectionBetHistory">
+            <span>
+              {{
+                call.misc.whiteProtectionBetHistory.length > 1
+                  ? "Apostas realizadas ⚪"
+                  : "Aposta realizada ⚪"
+              }}
+              <div
+                class="tooltip top medium"
+                [attr.data-tooltip]="
+                  'Apostas realizadas na cor branca (proteção).'
+                "
+              >
+                <span class="material-icons"> help_outline </span>
+              </div>
+            </span>
+            <span>{{
+              getCallMiscBetHistory(call.misc.whiteProtectionBetHistory)
+            }}</span>
+          </div>
+
+          <div class="detail">
+            <span
+              >Risco Máximo
+              <div
+                class="tooltip top medium"
+                [attr.data-tooltip]="
+                  'O montante máximo que foi apostado na operação.'
+                "
+              >
+                <span class="material-icons"> help_outline </span>
+              </div></span
+            >
+            <span>{{ call.maxDrawdown | currency : "BRL" }}</span>
+          </div>
+
+          <div class="detail" *ngIf="call.result >= 0">
+            <span
+              >Risco Retorno
+              <div
+                class="tooltip top medium"
+                [attr.data-tooltip]="
+                  'A razão da quantidade apostada pelo lucro obtido. Quanto maior o número da esquerda em relação ao da direita, melhor.'
+                "
+              >
+                <span class="material-icons"> help_outline </span>
+              </div>
+            </span>
+            <span>{{ call.riskReturn }}</span>
+          </div>
+        </div>
+
+        <h4>Histórico</h4>
+
+        <app-call-history
+          [history]="call.misc.history"
+          [game]="call.game"
+        ></app-call-history>
+      </ng-container>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-footer-button">
+        <app-button (onSafeClick)="close()"> Fechar </app-button>
+      </div>
+    </div>
+  </div>
+</div>

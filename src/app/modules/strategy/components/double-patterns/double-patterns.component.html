@@ -1,0 +1,156 @@
+<div class="container">
+  <div class="pattern-list">
+    <div
+      class="pattern-item"
+      *ngFor="let pattern of patterns; let patternIndex = index"
+    >
+      <div class="pattern-item-header">
+        <span class="pattern-item-header-title"
+          >Padrão {{ patternIndex + 1 }}</span
+        >
+
+        <button (click)="duplicatePattern({ patternIndex })">
+          <span class="material-icons"> content_copy </span>Duplicar
+        </button>
+        <button (click)="deletePattern({ patternIndex })">
+          <span class="material-icons"> delete_forever </span>Excluir
+        </button>
+
+        <div
+          class="pattern-item-header-target"
+          (click)="openPatternTargetConfig({ patternIndex })"
+        >
+          <span class="material-icons"> trending_up </span>
+          Alvo:
+          <span
+            class="pattern-item-header-target-color"
+            [class.block-red]="pattern.target === 'red'"
+            [class.block-black]="pattern.target === 'black'"
+            [class.block-white]="pattern.target === 'white'"
+          >
+          </span>
+
+          <div
+            class="pattern-config-tooltip"
+            *ngIf="isPatternTargetConfigOpen({ patternIndex})"
+          >
+            <div
+              class="pattern-config-tooltip-button color block-black"
+              (click)="
+              changePatternTarget({ patternIndex }, 'black')"
+            ></div>
+            <div
+              class="pattern-config-tooltip-button color block-red"
+              (click)="
+              changePatternTarget({ patternIndex }, 'red')
+            "
+            ></div>
+            <div
+              class="pattern-config-tooltip-button color block-white"
+              (click)="
+              changePatternTarget({ patternIndex }, 'white')
+            "
+            ></div>
+          </div>
+        </div>
+
+        <app-dropdown
+          *ngIf="responsitivy.isPhone"
+          [items]="dropdownItems"
+          [handlerParams]="{ patternIndex }"
+        >
+          <span class="material-icons"> more_vert </span>
+        </app-dropdown>
+      </div>
+
+      <div class="pattern-item-list">
+        <div
+          class="pattern-item-list-item"
+          *ngFor="
+            let patternItem of pattern.pattern;
+            let patternItemIndex = index
+          "
+          [class.block-red]="patternItem.color === 'red'"
+          [class.block-black]="patternItem.color === 'black'"
+          [class.block-white]="patternItem.color === 'white'"
+          [class.block-random]="patternItem.color === 'random'"
+          [class.block-focus]="isPatternItemConfigOpen({ patternIndex, patternItemIndex})"
+          (click)="openPatternItemConfig({ patternIndex, patternItemIndex }); $event.stopPropagation()"
+        >
+          {{ patternItem.roll ?? "" }}
+          <div
+            #tooltipElement
+            class="pattern-config-tooltip"
+            *ngIf="isPatternItemConfigOpen({ patternIndex, patternItemIndex})"
+          >
+            <div
+              class="pattern-config-tooltip-button"
+              (click)="deletePatternItem({ patternIndex, patternItemIndex })"
+            >
+              <span class="material-icons"> delete_forever </span>
+            </div>
+
+            <div
+              class="pattern-config-tooltip-button color block-black"
+              (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'black')
+              "
+            ></div>
+            <div
+              class="pattern-config-tooltip-button color block-red"
+              (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'red')
+              "
+            ></div>
+
+            <div
+              class="pattern-config-tooltip-button color block-white"
+              (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'white')
+              "
+            ></div>
+
+            <div
+              class="pattern-config-tooltip-button color block-random tooltip top"
+              (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'random')
+              "
+              data-tooltip="Pedra coringa"
+            ></div>
+
+            <select
+              *ngIf="patternItem.color !== 'white' && patternItem.color !== 'random'"
+              (change)="onPatternItemRollSelectChange($event,{ patternIndex, patternItemIndex })"
+              [value]="patternItem.roll"
+            >
+              <option [selected]="patternItem.roll == undefined">#</option>
+              <option
+                [value]="roll"
+                [selected]="patternItem.roll === roll"
+                *ngFor="
+                  let roll of patternItem.color === 'black'
+                    ? blackRolls
+                    : redRolls
+                "
+              >
+                {{ roll }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <span
+          (click)="addPatternListItem({ patternIndex })"
+          class="pattern-item-list-add-button material-icons"
+        >
+          add
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-pattern-button" (click)="addPattern()">
+    <span class="material-icons"> add </span>
+    Adicionar novo padrão
+  </div>
+</div>

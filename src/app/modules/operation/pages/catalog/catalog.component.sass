@@ -1,0 +1,41 @@
+@import 'colors'
+@import 'fonts'
+
+.catalog-container
+  margin: auto
+  width: 1200px
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+
+.header
+  border-bottom: 1px solid $darkblue500
+
+  &-game-select
+
+    &-buttons
+      display: flex
+      margin: 20px 0 40px 0
+
+      & button
+        width: 200px
+
+      & app-button:nth-child(2)
+        margin-left: 10px
+
+.catalog-crash-games
+  display: flex
+  flex-wrap: wrap
+
+.crash-game
+  display: flex
+  flex-direction: column
+  background: $darkblue600
+  margin-right: 20px
+  margin-bottom: 20px
+  padding: 5px 10px
+  border-radius: 5px
+
+  & span:first-child
+    color: $gray300
+    margin-bottom: 10px

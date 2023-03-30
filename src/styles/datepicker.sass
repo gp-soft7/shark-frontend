@@ -1,0 +1,51 @@
+@import 'colors'
+@import 'fonts'
+
+.dp-weekdays
+  display: flex
+
+.dp-nav-btns-container
+  display: flex
+
+  & button
+    border: none !important
+
+.dp-nav-header
+
+  & button
+    border: none
+
+.dp-popup
+  border: none !important
+  background: none !important
+
+dp-day-calendar .dp-day-calendar-container, dp-month-calendar .dp-month-calendar-container
+  border: 1px solid $darkblue500
+  border-radius: 10px
+  padding: 10px
+  background: $darkblue300 !important
+  font-family: $bf
+
+  & button
+    background: $darkblue400 !important
+    color: $gray300
+
+dp-day-calendar .dp-calendar-wrapper
+    border: none !important
+
+dp-calendar-nav .dp-calendar-nav-left, dp-calendar-nav .dp-calendar-nav-right
+    width: initial !important
+
+dp-calendar-nav .dp-calendar-nav-container
+    margin-bottom: 10px
+
+dp-calendar-nav .dp-calendar-nav-container, dp-day-calendar .dp-calendar-weekday, dp-day-calendar .dp-calendar-day
+    border: none !important
+
+dp-day-calendar .dp-calendar-day, dp-day-calendar .dp-calendar-month
+
+  &:hover
+    background: $darkblue600 !important
+
+dp-day-calendar .dp-calendar-month
+  border: 2px solid $darkblue500 !important

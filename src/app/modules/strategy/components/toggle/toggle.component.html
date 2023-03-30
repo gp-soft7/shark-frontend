@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <div class="container">
+    <button
+      *ngFor="let option of options"
+      [class.selected]="option.key === selected"
+      (click)="onSelected.emit(option)"
+    >
+      <span class="material-icons" *ngIf="option.icon">{{ option.icon }}</span>
+      {{ option.text }}
+    </button>
+  </div>
+</div>

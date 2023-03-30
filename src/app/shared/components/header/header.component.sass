@@ -1,0 +1,152 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.wrapper
+  width: 100%
+  background: $darkblue200
+  margin-bottom: 50px
+  position: fixed
+  left: 0
+  top: 0
+  z-index: 100
+  box-shadow: 0 2px 4px rgb(29, 29, 29)
+
+.container
+  width: 1200px
+  margin: auto
+  height: 80px
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+  @include phone
+    display: none
+
+.routes
+  display: flex
+  align-items: center
+
+  & img
+    height: 25px
+    margin-right: 30px
+    cursor: pointer
+
+.route
+  margin-right: 30px
+  display: flex
+  text-transform: uppercase
+
+  & a
+    color: $gray200
+    font-weight: $sw
+    font-size: 12px
+    cursor: pointer
+
+    &:hover
+      color: $gray300
+
+.not-authenticated
+  display: flex
+  align-items: center
+
+  & a
+    cursor: pointer
+    margin-left: 20px
+
+  & a:nth-child(2)
+    color: $primary400
+
+.authenticated
+  & a
+    cursor: pointer
+    margin-left: 20px
+    color: $lightorange300
+
+.mobile-container
+  display: none
+  justify-content: space-between
+  padding: 0 20px
+  height: 60px
+  align-items: center
+
+  & img
+    height: 30px
+    margin-right: 30px
+    cursor: pointer
+
+  @include phone
+    display: flex
+
+.mobile-menu
+  display: none
+  position: fixed
+  right: 0
+  top: 60px
+  width: 100vw
+  height: calc(100vh - 60px)
+  background: $darkblue200
+  padding: 0 30px
+  flex-direction: column
+
+  @include phone
+    display: flex
+
+.mobile-menu-list
+  display: flex
+  flex-direction: column
+  margin-top: 50px
+  width: 100%
+
+.mobile-menu-item
+  margin-bottom: 20px
+  border-bottom: 2px solid $darkblue500
+  padding-bottom: 20px
+
+  & a
+    font-size: 14px
+    text-transform: uppercase
+    font-weight: $mw
+
+.mobile-menu-account
+  display: flex
+  justify-content: flex-start
+  align-items: center
+  margin-top: 20px
+  padding-bottom: 20px
+
+  & a
+    cursor: pointer
+    color: $lightorange300
+
+.account-dropdown
+  display: flex
+  align-items: center
+  cursor: pointer
+  transition: all .2s ease
+  min-width: 160px
+  justify-content: flex-end
+  user-select: none
+
+  @include phone
+    justify-content: flex-start
+
+  & .highlight
+    color: $gray300
+
+  & span:first-child
+    margin-right: 5px
+
+  & span.material-icons
+    font-size: 18px
+
+.risk-management-alert
+  border: 1px solid $lightorange300
+  padding: 10px
+  border-radius: 15px
+  display: flex
+  align-items: center
+
+  & span
+    font-size: 14px
+    margin-right: 5px

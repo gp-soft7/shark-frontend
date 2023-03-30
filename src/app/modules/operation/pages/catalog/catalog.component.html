@@ -1,0 +1,33 @@
+<div class="catalog-container">
+  <div class="header">
+    <div class="header-game-select">
+      <span>Selecione o jogo: </span>
+
+      <div class="header-game-select-buttons">
+        <app-button
+          width="100px"
+          [variant]="getButtonVariant('CRASH')"
+          (onSafeClick)="changeGame('CRASH')"
+          >Crash</app-button
+        >
+        <app-button
+          width="100px"
+          [variant]="getButtonVariant('DOUBLE')"
+          (onSafeClick)="changeGame('DOUBLE')"
+          >Double</app-button
+        >
+      </div>
+      <h2>Últimos jogos Crash</h2>
+    </div>
+  </div>
+
+  <div class="catalog-games">
+    <div class="catalog-crash-games">
+      <div class="crash-game" *ngFor="let game of crashGames">
+        <span>{{ game.crashPoint }}X</span>
+
+        <span>{{ game.hours }}</span>
+      </div>
+    </div>
+  </div>
+</div>

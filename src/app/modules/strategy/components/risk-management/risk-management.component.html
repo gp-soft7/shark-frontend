@@ -1,0 +1,138 @@
+<div class="container" [formGroup]="form">
+  <app-config-dropdown title="Geral">
+    <app-input
+      [form]="form"
+      type="currency-resizable"
+      name="betAmount"
+      label="Valor da entrada:"
+      leftText="R$"
+    ></app-input>
+  </app-config-dropdown>
+  <app-config-dropdown
+    title="Pausas de segurança"
+    [tip]="{ text: 'O que são pausas de segurança?', route: [] }"
+  >
+    <app-complete
+      [inputs]="[
+        { type: 'number', text: 'sinais da estratégia', defaultValue: 2 },
+        { type: 'number', text: 'operações com perda', defaultValue: 5 }
+      ]"
+      formControlName="skipXCallsAfterYLossOperations"
+      text="Pular {} após {}"
+      [requiresActivation]="true"
+      [activationValidations]="
+        formActivationValidations.skipXCallsAfterYLossOperations
+      "
+    ></app-complete>
+    <app-complete
+      [inputs]="[
+        { type: 'number', text: 'sinais da estratégia', defaultValue: 2 },
+        { type: 'number', text: 'operações com ganho', defaultValue: 5 }
+      ]"
+      formControlName="skipXCallsAfterYWinOperations"
+      text="Pular {} após {}"
+      [requiresActivation]="true"
+      [activationValidations]="
+        formActivationValidations.skipXCallsAfterYWinOperations
+      "
+    ></app-complete>
+    <app-complete
+      [inputs]="[
+        { type: 'number', text: 'jogos', defaultValue: 10 },
+        { type: 'number', text: 'operações com ganho', defaultValue: 1 }
+      ]"
+      formControlName="skipXGamesAfterYWinOperations"
+      text="Pular {} após {}"
+      [requiresActivation]="true"
+      [activationValidations]="
+        formActivationValidations.skipXGamesAfterYWinOperations
+      "
+    ></app-complete>
+    <app-complete
+      [inputs]="[
+        { type: 'number', text: 'jogos', defaultValue: 10 },
+        { type: 'number', text: 'operações com perda', defaultValue: 1 }
+      ]"
+      formControlName="skipXGamesAfterYLossOperations"
+      text="Pular {} após {}"
+      [requiresActivation]="true"
+      [activationValidations]="
+        formActivationValidations.skipXGamesAfterYLossOperations
+      "
+    ></app-complete>
+    <app-complete
+      [inputs]="[
+        { type: 'number', text: 'minutos', defaultValue: 10 },
+        { type: 'number', text: 'operações com perda', defaultValue: 1 }
+      ]"
+      formControlName="waitXMinutesAfterYLossOperations"
+      text="Aguardar {} após {}"
+      [requiresActivation]="true"
+      [activationValidations]="
+        formActivationValidations.waitXMinutesAfterYLossOperations
+      "
+    ></app-complete>
+    <app-complete
+      [inputs]="[
+        { type: 'number', text: 'minutos', defaultValue: 10 },
+        { type: 'number', text: 'operações com ganho', defaultValue: 1 }
+      ]"
+      formControlName="waitXMinutesAfterYWinOperations"
+      text="Aguardar {} após {}"
+      [requiresActivation]="true"
+      [activationValidations]="
+        formActivationValidations.waitXMinutesAfterYWinOperations
+      "
+    ></app-complete>
+  </app-config-dropdown>
+  <app-config-dropdown
+    title="Proteção no branco"
+    *ngIf="currentGame === 'DOUBLE'"
+  >
+    <div class="input-container">
+      <app-input
+        [form]="form"
+        type="checkbox"
+        name="enableWhiteProtection"
+        label="Ativar"
+      ></app-input>
+    </div>
+    <div
+      class="input-activation-box"
+      [class.input-activation-box--enabled]="isWhiteProtectionEnabled"
+    >
+      <div class="input-container">
+        <app-input
+          [form]="form"
+          type="currency-resizable"
+          name="whiteProtectionBetAmount"
+          label="Valor da entrada no branco:"
+          leftText="R$"
+        ></app-input>
+      </div>
+
+      <div class="input-container">
+        <div
+          class="input-activation-box"
+          style="margin-top: 0 !important; padding-bottom: 0 !important"
+          [class.input-activation-box--enabled]="isMartingaleEnabled"
+        >
+          <app-input
+            [form]="form"
+            type="checkbox"
+            name="whiteProtectionDoMartingale"
+            label="Fazer martingale"
+          ></app-input>
+
+          <app-martingale-multipliers
+            [hidden]="!isWhiteProtectionMartingaleEnabled"
+            [form]="form"
+            customMultipliersControl="whiteProtectionCustomMultipliers"
+            multiplierCountControl="whiteProtectionMartingaleMultiplierCount"
+            [maxMartingales]="martingaleMultiplierCount"
+          ></app-martingale-multipliers>
+        </div>
+      </div>
+    </div>
+  </app-config-dropdown>
+</div>

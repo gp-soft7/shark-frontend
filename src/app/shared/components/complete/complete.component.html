@@ -1,0 +1,37 @@
+<div class="wrapper">
+  <input
+    *ngIf="requiresActivation"
+    type="checkbox"
+    [checked]="isActivated"
+    (change)="onActivateInputChange($event)"
+  />
+
+  <div class="container" [class.has-disabled]="isDisabled">
+    <ng-container
+      *ngFor="let formControl of inputFormControls; let index = index"
+    >
+      <span>{{ textParts[index] }}</span>
+      <div
+        *ngIf="inputs[index].type === 'number'"
+        class="input"
+        [class.has-focus]="hasFocus(index)"
+        (click)="focusInput(index)"
+      >
+        <input
+          #input
+          [formControl]="formControl"
+          [id]="'input-' + index"
+          type="text"
+          autoSizeInput
+          appOnlyNumbers
+          [minWidth]="10"
+          [defaultValue]="inputs[index].defaultValue"
+          (focus)="setInputFocus(index, true)"
+          (blur)="setInputFocus(index, false)"
+          (input)="handleInputChange()"
+        />
+        {{ inputs[index].text }}
+      </div>
+    </ng-container>
+  </div>
+</div>

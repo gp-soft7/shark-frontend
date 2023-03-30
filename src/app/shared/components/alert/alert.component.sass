@@ -1,0 +1,36 @@
+@import 'colors'
+
+.alert
+  margin-bottom: 20px
+  border: 1px solid $lightorange300
+  padding: 10px 20px
+  border-radius: 5px
+  color: $gray300
+  font-size: 14px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  line-height: 1.275em
+  cursor: pointer
+  transition: all .2s ease
+
+  &:hover
+    background: rgba($lightorange300, .2)
+
+.alert-content
+  display: flex
+  align-items: center
+
+  & span:first-child
+    margin-right: 20px
+    font-size: 18px
+
+.alert-close
+  font-size: 18px
+  color: $gray200
+  transition: all .2s ease
+  cursor: pointer
+  justify-self: flex-end
+
+  &:hover
+    color: $gray300

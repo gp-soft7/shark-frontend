@@ -1,0 +1,100 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/triangle'
+
+@mixin tooltip($direction: top)
+  position: relative
+
+  &:before, &:after
+    opacity: 0
+    z-index: 99
+    pointer-events: none
+    transition: all .3s ease
+
+  &:before
+    content: attr(data-tooltip)
+    position: absolute
+    background: $darkblue600
+    border-radius: 4px
+    color: $gray200
+    font-size: 12px
+    padding: 10px 20px
+    text-align: center
+    white-space: nowrap
+    text-transform: none !important
+
+  @if $direction == 'top'
+    &:before
+      left: 50%
+      top: -10px
+      transform: translateY(-100%) translateX(-50%)
+
+    &:after
+      @include triangle(down, 5px, $darkblue600)
+      left: 50%
+      top: -6px
+      transform: translateY(-100%) translateX(-50%)
+
+  @if $direction == 'left'
+    &:before
+      left: -10px
+      top: 50%
+      transform: translateY(-50%) translateX(-100%)
+
+    &:after
+      @include triangle(right, 5px, $darkblue600)
+      left: -6px
+      top: 50%
+      transform: translateY(-50%) translateX(-100%)
+
+  @if $direction == 'right'
+    &:before
+      right: -10px
+      top: 50%
+      transform: translateY(-50%) translateX(100%)
+
+    &:after
+      @include triangle(left, 5px, $darkblue600)
+      right: -6px
+      top: 50%
+      transform: translateY(-50%) translateX(100%)
+
+  @if $direction == 'bottom'
+    &:before
+      left: 50%
+      bottom: -10px
+      transform: translateY(100%) translateX(-50%)
+
+    &:after
+      @include triangle(up, 5px, $darkblue600)
+      left: 50%
+      bottom: -6px
+      transform: translateY(100%) translateX(-50%)
+
+  &:after
+    content: ''
+
+  &:hover
+    &:before, &:after
+      opacity: 1
+      pointer-events: all
+
+.tooltip
+
+  &.medium
+
+    &:before
+      min-width: 200px !important
+      white-space: pre-line !important
+
+  &.top
+    @include tooltip(top)
+
+  &.bottom
+    @include tooltip(bottom)
+
+  &.left
+    @include tooltip(left)
+
+  &.right
+    @include tooltip(right)

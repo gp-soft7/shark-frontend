@@ -1,0 +1,127 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.record-card
+  background: $darkblue400
+  padding: 15px 30px
+  border-radius: 10px
+  box-shadow: 0 2px 4px rgb(29, 29, 29)
+  margin-bottom: 20px
+  border: 1px solid transparent
+  transition: border .2s ease
+  user-select: none
+
+.call-card
+  cursor: pointer
+  border-color: $darkblue500
+
+  &:hover
+    border: 1px solid $primary200
+
+  &-header
+    display: flex
+    justify-content: space-between
+
+  &-info
+    display: flex
+
+  &-section
+    display: flex
+    align-items: center
+    font-size: 12px
+    margin-left: 10px
+
+    @include phone
+      font-size: 8px
+
+    & .material-icons
+      font-size: 14px
+      margin-right: 5px
+
+  &-platform
+    font-size: 8px
+
+  &-name
+    color: $gray300
+    line-height: 1.275em
+
+  &-content
+    display: flex
+    justify-content: space-between
+    margin-top: 20px
+
+  &-footer
+    border-top: 2px solid $darkblue500
+    margin-top: 10px
+    padding-top: 20px
+
+  &-misc
+    display: flex
+    flex-direction: column
+    margin-left: 15px
+
+    & small
+      color: $gray200
+      text-transform: uppercase
+      font-weight: $mw
+      font-size: 9px
+      text-align: right
+
+    & span
+      font-size: 11px
+      margin: 5px 0 0 5px
+      margin-bottom: 10px
+      color: $gray300
+      text-align: right
+      line-height: 1.5em
+
+  &-status
+    display: flex
+    align-items: center
+    font-size: 14px
+    color: $lightorange300
+
+    & .material-icons
+      font-size: 14px
+      margin-right: 5px
+
+  &-result
+    font-size: 16px
+    color: $gray300
+
+  &-account
+    margin-left: 20px
+    border: 1px solid $gray100
+    border-radius: 10px
+    padding: 0 10px
+    height: 23px
+    display: flex
+    align-items: center
+    font-size: 10px
+
+    &--real
+      background: $darkblue500
+      color: $gray300
+
+  @include phone
+    width: 100%
+    margin-right: 0
+
+    &-name
+      font-size: 14px
+
+    &-status
+      font-size: 12px
+
+    &-result
+      font-size: 12px
+
+    &-account
+      font-size: 8px
+
+.status-win
+  color: $lightgreen300
+
+.status-error
+  color: #db3a3a

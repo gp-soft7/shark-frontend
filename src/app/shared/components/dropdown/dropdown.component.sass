@@ -1,0 +1,39 @@
+@import 'colors'
+
+.dropdown-wrapper
+  position: relative
+
+.dropdown-container
+  position: absolute
+  right: 0
+  bottom: 0
+  transform: translateY(calc(100% + 2px))
+  display: flex
+  background: $darkblue400
+  border: 1px solid $darkblue500
+  border-radius: 10px
+  padding: 5px 0
+  box-shadow: 0 1px 2px rgb(29, 29, 29)
+  z-index: 100
+
+.dropdown-item-list
+  display: flex
+  flex-direction: column
+
+.dropdown-item
+  padding: 10px 25px
+  display: flex
+  border-bottom: 1px solid $darkblue600
+  border-radius: 5px
+  cursor: pointer
+
+  &:hover
+    background: $darkblue600
+    color: $gray300
+
+  &:last-child
+    border-bottom: none
+
+  & .material-icons
+    font-size: 14px
+    margin-right: 10px

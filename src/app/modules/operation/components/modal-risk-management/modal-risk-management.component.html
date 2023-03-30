@@ -1,0 +1,111 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Gerenciamento de Risco</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <app-alert>
+        Qualquer alteração feita no Gerenciamento de Risco enquanto o robô
+        esteja ligado, não será refletida até que ele seja religado. O Stop Gain
+        ou Stop Loss começam a ser contabilizados assim que o robô é iniciado,
+        não considerando rodadas passadas.
+      </app-alert>
+
+      <ng-container *ngIf="canShowShimmer()">
+        <div class="shimmer-section-row shimmer"></div>
+        <div class="shimmer-section-row shimmer"></div>
+        <div class="shimmer-section-row shimmer" [style.height]="'22px'"></div>
+      </ng-container>
+
+      <div [hidden]="!isLoaded()">
+        <div class="section-row">
+          <p>Stop Gain</p>
+          <div class="section-row-inputs">
+            <app-input
+              [form]="form"
+              type="currency-resizable"
+              name="dailyProfitGoal"
+              label="Meta financeira:"
+              leftText="R$"
+              [requiresActivation]="true"
+              [activationValidations]="
+                formActivationValidations.dailyProfitGoal
+              "
+            ></app-input>
+            <app-input
+              [form]="form"
+              type="number-resizable"
+              name="dailyMaxProfitOperations"
+              label="Quantidade máxima de operações com ganho:"
+              rightText="operações"
+              [minWidth]="20"
+              [requiresActivation]="true"
+              [activationValidations]="
+                formActivationValidations.dailyMaxProfitOperations
+              "
+            ></app-input>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <p>Stop Loss</p>
+          <div class="section-row-inputs">
+            <app-input
+              [form]="form"
+              type="currency-resizable"
+              name="dailyLossLimit"
+              label="Meta de perda financeira:"
+              leftText="R$"
+              [requiresActivation]="true"
+              [activationValidations]="formActivationValidations.dailyLossLimit"
+            ></app-input>
+            <app-input
+              [form]="form"
+              type="number-resizable"
+              name="dailyMaxLossOperations"
+              label="Quantidade máxima de operações com perda:"
+              rightText="operações"
+              [minWidth]="20"
+              [requiresActivation]="true"
+              [activationValidations]="
+                formActivationValidations.dailyMaxLossOperations
+              "
+            ></app-input>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <p>Restrições de Horário</p>
+          <app-time-restrictions #timeRestrictions></app-time-restrictions>
+        </div>
+
+        <div class="section-row">
+          <div class="section-row-inputs">
+            <app-input
+              [form]="form"
+              type="checkbox"
+              name="restartOnNextDay"
+              label="Religar automaticamente no dia seguinte após atingir stop gain/loss"
+              rightText="operações"
+            ></app-input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-footer-button">
+        <app-button
+          (onSafeClick)="submitRiskManagement()"
+          [enableLoading]="true"
+          [disabled]="canShowShimmer()"
+          >Salvar</app-button
+        >
+      </div>
+    </div>
+  </div>
+</div>

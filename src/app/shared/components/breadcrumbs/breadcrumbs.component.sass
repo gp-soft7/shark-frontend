@@ -1,0 +1,38 @@
+@import 'colors'
+@import 'mixins/responsive'
+
+.container
+  width: 1200px
+  margin: auto
+  display: flex
+  align-items: center
+  margin-top: 120px
+
+  @include phone
+    display: none
+
+.breadcrumb
+  display: flex
+  align-items: center
+  margin-right: 5px
+  user-select: none
+  cursor: pointer
+  transition: all .2s ease
+
+  & span
+    pointer-events: none
+
+  & a
+
+    &:hover
+      color: $gray300
+
+  &--active
+    pointer-events: none
+
+    & a
+      color: $gray300
+
+  & .material-icons
+    margin-left: 5px
+    font-size: 16px

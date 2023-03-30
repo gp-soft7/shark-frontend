@@ -1,0 +1,163 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+@import 'mixins/display'
+
+.container
+  width: 1200px
+  margin: auto
+  margin-top: 50px
+
+  @include phone
+    margin-top: 100px
+    width: 100%
+    padding: 0 20px
+
+.shimmer-header-game-select
+  height: 76px
+  width: 300px
+
+.header
+  border-bottom: 1px solid $darkblue500
+
+  &-game-select
+
+    &-buttons
+      display: flex
+      margin-top: 10px
+
+  &-buttons
+    @include flex-center
+
+    @include phone
+      @include flex-vertical
+      width: 100%
+
+      & app-button:first-child
+        margin-right: 0 !important
+
+  &-name-actions
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+    margin-top: 50px
+    margin-bottom: 20px
+
+    @include phone
+      flex-direction: column
+      align-items: flex-start
+
+      & app-button
+        margin-top: 20px
+        width: 100%
+
+    & h3
+      display: flex
+      align-items: center
+      margin-bottom: 0 !important
+      cursor: pointer
+      transition: all .2s ease
+      line-height: 1.275em
+
+      &:hover
+        color: $gray200
+
+      & span
+        margin-left: 20px
+        font-size: 18px
+
+.header-game-select-wrapper
+  display: flex
+
+  & .header-game-select:last-child
+    margin-left: 20px
+
+  @include phone
+    flex-direction: column
+
+    & .header-game-select:last-child
+      margin-left: initial
+      margin-top: 20px
+
+.builder
+  width: 1200px
+  display: flex
+
+  @include phone
+    width: 100%
+    flex-direction: column
+
+  &-tabs
+    width: 300px
+    display: flex
+    flex-direction: column
+    border-right: 1px solid $darkblue500
+    padding-top: 20px
+
+    @include phone
+      width: 100%
+      border-right: none
+      border-bottom: 1px solid $darkblue500
+
+  &-tab-topic
+    border-bottom: 1px solid $darkblue500
+    padding: 20px 20px 10px 0
+
+  &-tab
+    margin-bottom: 10px
+    cursor: pointer
+    transition: all .2s ease
+    display: flex
+    align-items: center
+    user-select: none
+    border-radius: 5px
+    padding: 15px 20px
+    border: 1px solid transparent
+
+    @include phone
+      margin-right: 0
+
+    & span.material-icons
+      font-size: 18px
+      margin-right: 10px
+
+    & span:nth-child(2)
+      font-size: 16px
+
+    &-soon
+      font-weight: $bw
+      text-transform: uppercase
+      color: $gray100
+      margin-left: 10px
+
+    &:hover
+      color: $gray300
+      background: $darkblue400
+
+    &--active
+      color: $gray300
+      font-weight: $mw
+      background: $darkblue500
+      border-color: $darkblue600
+
+    &--disabled
+      pointer-events: none
+
+  &-tab-content
+    padding: 40px
+    padding-right: 0
+    width: calc(100% - 300px)
+
+    & span
+      line-height: 1.275em
+
+    @include phone
+      width: 100%
+      padding: 0
+      margin: 40px 0
+
+.shimmer-builder-tab
+  height: 20px
+  margin-bottom: 10px
+  width: 100%
+  margin-right: 20px

@@ -1,0 +1,102 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.manage-bots-container
+  margin: auto
+  width: 1200px
+  margin-top: 50px
+
+  @include phone
+    width: 100%
+    margin-top: 100px
+    flex-direction: column
+
+    & h3
+      display: none
+
+.bot-item
+  background: $darkblue300
+  border-radius: 10px
+  padding: 20px 30px
+  padding-bottom: 0
+  margin-bottom: 20px
+  border: 1px solid $darkblue500
+
+  @include phone
+    margin: 0 20px
+
+  &-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 10px
+
+    & span.small
+      line-height: 1.275em
+
+    & span.material-icons
+      cursor: pointer
+      transition: all .2s ease
+      user-select: none
+
+      &:hover
+        color: $gray300
+
+.bot-item-slave
+  background: $darkblue400
+  border-radius: 10px
+  margin-bottom: 10px
+  padding: 20px
+  border: 1px solid $darkblue500
+
+  & .bot-item-data-list
+    @include phone
+      flex-direction: column
+
+  & .bot-item-data
+    @include phone
+
+      & small
+        text-align: left
+
+      & span
+        text-align: left
+        margin-left: 0
+
+  & h5
+    margin-bottom: 10px !important
+
+  &-title
+    font-size: 14px
+    color: $gray300
+    margin-bottom: 20px
+
+.bot-item-data-list
+  display: flex
+  margin-bottom: 20px
+  flex-wrap: wrap
+
+.bot-item-data
+  display: flex
+  flex-direction: column
+  margin-right: 15px
+  border: 1px solid $darkblue500
+  background: $darkblue600
+  padding: 10px
+  border-radius: 5px
+  margin-bottom: 10px
+
+  & small
+    color: $gray200
+    text-transform: uppercase
+    font-weight: $mw
+    font-size: 10px
+    text-align: right
+
+  & span
+    font-size: 12px
+    margin: 5px 0 0 5px
+    color: $gray300
+    text-align: right
+    line-height: 1.5em

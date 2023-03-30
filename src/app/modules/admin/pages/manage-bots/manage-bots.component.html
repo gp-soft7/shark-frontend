@@ -1,0 +1,118 @@
+<div class="manage-bots-container">
+  <h3>Lista de robôs</h3>
+
+  <div class="bot-list">
+    <div class="bot-item" *ngFor="let bot of bots">
+      <div class="bot-item-header">
+        <span class="small"> {{ bot.socketId }} • {{ bot.userId }} </span>
+
+        <span
+          class="material-icons"
+          [@rotate]="!bot.hide"
+          (click)="bot.hide = !bot.hide"
+        >
+          expand_more
+        </span>
+      </div>
+
+      <div class="bot-item-data-list">
+        <div class="bot-item-data">
+          <small>Placar</small>
+          <span> {{ bot.session.wins }}x{{ bot.session.losses }} </span>
+        </div>
+        <div class="bot-item-data">
+          <small>Resultado</small>
+          <span> {{ bot.session.result | currency: "BRL" }} </span>
+        </div>
+        <div class="bot-item-data">
+          <small>Conta</small>
+          <span> {{ bot.accountType }} </span>
+        </div>
+        <div class="bot-item-data">
+          <small>Status</small>
+          <span> {{ bot.status }} </span>
+        </div>
+      </div>
+
+      <div class="bot-item-content" [@collapse]="bot.hide">
+        <div
+          class="bot-item-slave"
+          *ngFor="let slave of bot.slaves; let index = index"
+        >
+          <p class="bot-item-slave-title">Worker #{{ index + 1 }}</p>
+
+          <h5>Plataforma</h5>
+          <div class="bot-item-data-list">
+            <div class="bot-item-data">
+              <small>Plataforma</small>
+              <span> {{ slave.platform.platform }} </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Jogo</small>
+              <span> {{ slave.platform.game }} </span>
+            </div>
+          </div>
+
+          <h5>Sessão</h5>
+
+          <div class="bot-item-data-list">
+            <div class="bot-item-data">
+              <small>Histórico de apostas</small>
+              <span> {{ getBetHistory(slave.callSession.betHistory) }} </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Histórico de apostas ⚪</small>
+              <span>
+                {{ getBetHistory(slave.callSession.whiteProtectionBetHistory) }}
+              </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Resultado</small>
+              <span>
+                {{ slave.callSession.betResult | currency: "BRL" }}
+              </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Vitórias consecutivas</small>
+              <span>
+                {{ slave.workerSession.consecutiveWins }}
+              </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Derrotas consecutivas</small>
+              <span>
+                {{ slave.workerSession.consecutiveLosses }}
+              </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Martingale</small>
+              <span>
+                {{ slave.callSession.martingale.count }}
+              </span>
+            </div>
+            <div class="bot-item-data">
+              <small>Esperando o próximo sinal</small>
+              <span>
+                {{ slave.callSession.waitingNextCall ? "Sim" : "Não" }}
+              </span>
+            </div>
+            <ng-container *ngIf="slave.callSession.soros">
+              <div class="bot-item-data">
+                <small>Soros</small>
+                <span>
+                  {{ slave.callSession.soros.count }}
+                </span>
+              </div>
+              <div class="bot-item-data">
+                <small>Lucro Soros</small>
+                <span>
+                  {{ slave.callSession.soros.currentProfit }}
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

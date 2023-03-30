@@ -1,0 +1,39 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.modal-wrapper
+  z-index: 99999
+
+.modal-container
+  width: 650px
+
+.modal-content
+  overflow-y: auto
+  max-height: 65vh
+
+.section-row
+  margin-bottom: 20px
+
+  &:not(:last-child)
+    border-bottom: 2px solid $darkblue500
+
+  & p
+    font-size: 16px
+    font-weight: $sw
+    color: $gray300
+    margin-bottom: 10px
+
+  &-inputs
+    padding-top: 10px
+    display: flex
+
+    @include phone
+      flex-wrap: wrap
+
+    & app-input
+      margin-right: 20px
+
+.shimmer-section-row
+  height: 148px
+  margin-bottom: 20px

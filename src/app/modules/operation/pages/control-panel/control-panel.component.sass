@@ -1,0 +1,380 @@
+@import 'colors'
+@import 'fonts'
+@import 'mixins/responsive'
+
+.control-panel-container
+  margin: auto
+  width: 1200px
+  margin-top: 20px
+  display: flex
+
+  @include phone
+    width: 100%
+    margin-top: 100px
+    flex-direction: column
+    margin-bottom: 40px
+
+.section-operation
+  width: 360px
+  padding-right: 60px
+  border-right: 1px solid $darkblue500
+
+  @include phone
+    padding-right: 0
+    border-right: none
+    padding: 0 20px
+    width: 100%
+
+@keyframes operation-button-glow
+  from
+    border: 1px solid transparent
+
+  to
+    border: 1px solid $primary300
+
+.shimmer-operation-button
+  height: 180px
+  border-radius: 10px
+  margin-bottom: 20px
+  padding: 0 20px
+
+.operation-button
+  height: 180px
+  background: $darkblue400
+  border-radius: 10px
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  transition: all .2s ease
+  margin-bottom: 20px
+  user-select: none
+  color: $gray300
+  text-align: center
+  padding: 0 20px
+
+  &--glow
+    animation: operation-button-glow 1s infinite alternate-reverse
+
+  &--disabled
+    background: $darkblue300
+    color: $gray200
+    pointer-events: none
+
+  &--danger
+    border-color: $lightorange300 !important
+
+    &:hover
+      background: $lightorange300 !important
+
+  &--success
+    &:hover
+      background: $primary300
+      color: $gray300
+
+  & span
+    font-size: 96px
+
+  & p
+    font-weight: $mw
+    font-size: 16px
+    line-height: 1.275em
+
+  & small
+    margin-top: 10px
+    line-height: 1.275em
+    color: $gray200
+
+  &:hover
+    background: $primary300
+    color: $gray300
+
+.shimmer-section-card
+  height: 150px
+  margin-bottom: 20px
+
+.section-card
+  background: $darkblue400
+  padding: 20px 30px
+  border-radius: 10px
+  margin-bottom: 20px
+
+  &-title
+    color: $gray300
+    font-size: 16px
+
+.section-platform-connection-card
+  & p
+    margin-bottom: 20px
+    display: flex
+    align-items: center
+
+    & span
+      margin-left: 5px
+      font-size: 18px
+
+.section-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 20px
+
+  & h4
+    margin-bottom: 0 !important
+
+  @include phone
+    width: 100% !important
+    flex-direction: column
+    align-items: flex-start
+
+.active-strategies-list
+  display: flex
+  flex-direction: column
+  margin: 20px 0
+
+.active-strategy-item
+  line-height: 1.275em
+  display: flex
+  align-items: center
+  cursor: pointer
+  justify-content: space-between
+
+  & div
+    display: flex
+    align-items: center
+
+  & span.material-icons
+    font-size: 14px
+    margin-right: 5px
+
+  &:hover
+
+    & a
+      text-decoration: underline
+
+.active-strategy-item-platform
+
+  & span
+    color: $gray200
+    font-size: 10px
+
+.section-stats
+  padding-left: 60px
+
+  & h4
+    color: $gray200
+
+  @include phone
+    padding: 0 20px
+    padding-top: 20px
+    border-top: 2px solid $darkblue500
+
+.stat-card
+  box-shadow: 0 2px 4px rgb(29, 29, 29)
+  margin-right: 20px
+  text-align: right
+
+  & p
+    font-size: 16px
+    margin-bottom: 15px
+    text-align: left
+
+  & span
+    font-size: 24px
+    color: $gray300
+
+  & div
+    display: flex
+
+    & span
+      margin-right: 5px
+
+    & small
+      font-size: 12px
+      margin-left: 5px
+
+    & small.material-icons
+      margin-right: 5px
+
+.shimmer-stat-card-list
+  height: 115px
+  margin-bottom: 20px
+
+.shimmer-stat-card
+  height: 95px
+  margin-bottom: 20px
+  width: 18%
+  margin-right: 20px
+
+.stat-card-list
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  margin-bottom: 20px
+
+  @include phone
+
+    & .stat-card
+      width: 100%
+      display: flex
+      margin-right: 0
+      justify-content: space-between
+
+      & span
+        font-size: 16px
+
+      & p
+        margin-bottom: 0 !important
+
+.record-list
+  max-width: 500px
+
+  &-actions
+    margin-bottom: 40px
+    padding: 0 30px
+    display: flex
+    justify-content: space-between
+    width: 500px
+
+    & span
+      transition: all .2s ease
+      cursor: pointer
+
+      &:hover
+        color: $gray300
+
+.no-calls
+
+  p
+    font-size: 12px
+
+.shimmer-operation-account
+  margin-bottom: 20px
+  height: 34px
+
+.operation-account
+  display: flex
+  margin-bottom: 20px
+  border: 1px solid $darkblue600
+  border-radius: 5px
+  justify-content: center
+  user-select: none
+
+  &-selector:first-child
+    border-right: 1px solid $darkblue600
+
+  &-selector
+    font-size: 12px
+    font-weight: $mw
+    padding: 10px 0
+    width: 50%
+    text-align: center
+    cursor: pointer
+    transition: all .2s ease
+
+    &:hover
+      background: $darkblue300
+      color: $gray300
+
+    &--selected
+      color: $gray300
+      background: $darkblue500
+      pointer-events: none
+
+.retrieved-wrapper
+  position: fixed
+  left: 0
+  top: 0
+  width: 100vw
+  height: 100vh
+  display: flex
+  justify-content: center
+  align-items: center
+  background: $darkblue100
+  z-index: 1000
+
+.retrieved-container
+  width: 400px
+  border-radius: 10px
+  padding: 20px 30px
+  line-height: 1.275em
+  background: $darkblue400
+
+  &-buttons
+    margin-top: 30px
+
+.action-buttons
+  display: flex
+
+  @include phone
+    width: 100%
+    margin-top: 20px
+    justify-content: space-between
+
+.action-button
+  margin-left: 10px
+  border-radius: 5px
+  border: 1px solid $darkblue500
+  background: $darkblue300
+  padding: 3px 10px
+  transition: all .2s ease
+  cursor: pointer
+  user-select: none
+  font-size: 12px
+  display: flex
+  align-items: center
+
+  &:hover
+    background: $darkblue500
+    color: $gray300
+
+    & span
+      color: $gray300
+
+  & span
+    margin-right: 5px
+    font-size: 18px
+
+  @include phone
+    margin-left: 0
+
+    &:first-child
+      margin-right: 5px
+
+.shimmer-action-button
+  width: 145px
+  height: 26px
+
+.shimmer-action-buttons
+  width: 500px
+  justify-content: space-between
+  margin-bottom: 20px
+
+  @include phone
+    width: 100%
+
+.shimmer-call-card
+  width: 500px
+  height: 98px
+  margin-bottom: 20px
+
+.mobile-show-sections
+  display: flex
+  align-items: center
+  margin-bottom: 20px
+
+  & h4
+    margin-bottom: 0 !important
+
+  & span
+    margin-left: 10px
+
+.blaze-balance-loading
+  color: $darkblue300 !important
+
+.positive
+  color: $lightgreen300 !important
+
+.negative
+  color: #db3a3a !important

@@ -1,0 +1,83 @@
+<div class="container">
+  <ng-container *ngIf="isCrash">
+    <div class="block-wrapper" *ngFor="let item of history">
+      <div [class.hidden]="!isGameSpecial(item)" class="block-game-metadata">
+        <span>{{ getGameEntryType(item) }} </span>
+      </div>
+
+      <div
+        class="block separator-block"
+        *ngIf="isSeparator(item); else elseNoSeparator"
+      >
+        <span class="material-icons"> more_horiz </span>
+      </div>
+
+      <ng-template #elseNoSeparator>
+        <div
+          class="block crash-block"
+          [ngClass]="{
+            'crash-block-green': isCrashGamePositive(item),
+            'crash-block-black': isCrashGameNegative(item),
+            'crash-block-highlight': isGameSpecial(item)
+          }"
+        >
+          <span> {{ getCrashGameCrashPoint(item) }} </span>
+        </div>
+      </ng-template>
+
+      <div
+        [class.hidden]="!isGameSpecial(item)"
+        class="block-game-metadata crash-game-bets"
+      >
+        <span *ngFor="let bet of getGameBets(item)"
+          >{{ bet.amount | currency: "BRL" }} -> {{ bet.target }}X
+        </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isDouble">
+    <div class="block-wrapper" *ngFor="let item of history">
+      <div [class.hidden]="!isGameSpecial(item)" class="block-game-metadata">
+        <span>{{ getGameEntryType(item) }} </span>
+      </div>
+
+      <div
+        class="block separator-block"
+        *ngIf="isSeparator(item); else elseNoSeparator"
+      >
+        <span class="material-icons"> more_horiz </span>
+      </div>
+
+      <ng-template #elseNoSeparator>
+        <div
+          class="block double-block"
+          [ngClass]="{
+            'double-block-red': isDoubleGameColor(item, 'R'),
+            'double-block-black': isDoubleGameColor(item, 'B'),
+            'double-block-white': isDoubleGameColor(item, 'W')
+          }"
+        >
+          <span> {{ getDoubleGameRoll(item) }} </span>
+        </div>
+      </ng-template>
+
+      <div
+        [class.hidden]="!isGameSpecial(item)"
+        class="block-game-metadata double-game-bets"
+      >
+        <ng-container *ngFor="let bet of getGameBets(item)">
+          <span>{{ bet.amount | currency: "BRL" }} </span>
+          <div
+            class="double-game-target"
+            [ngClass]="{
+              'double-block-red': bet.target == 1,
+              'double-block-black': bet.target == 2,
+              'double-block-white': bet.target == 0
+            }"
+          ></div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

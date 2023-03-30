@@ -1,0 +1,73 @@
+<div class="risk-management-container">
+  <div class="risk-management-header">
+    <div>
+      <h2>Gerenciamento de Risco</h2>
+      <!-- <p>Aqui você pode visualizar e editar seu gerenciamento de risco.</p> -->
+    </div>
+    <app-button (onSafeClick)="submitRiskManagement()"
+      >Salvar gerenciamento de risco</app-button
+    >
+  </div>
+
+  <div class="risk-management-sections">
+    <div class="risk-management-section">
+      <div class="risk-management-section-header">
+        <span>Stop gain</span>
+        <!-- <a>O que é stop gain?</a> -->
+      </div>
+      <div class="risk-management-section-inputs">
+        <app-input
+          [form]="form"
+          type="currency-resizable"
+          name="dailyProfitGoal"
+          label="Meta financeira:"
+          leftText="R$"
+          [requiresActivation]="true"
+          [activationValidations]="formActivationValidations.dailyProfitGoal"
+        ></app-input>
+        <app-input
+          [form]="form"
+          type="number-resizable"
+          name="dailyMaxProfitOperations"
+          label="Quantidade máxima de operações com ganho:"
+          rightText="operações"
+          [minWidth]="20"
+          [requiresActivation]="true"
+          [activationValidations]="
+            formActivationValidations.dailyMaxProfitOperations
+          "
+        ></app-input>
+      </div>
+    </div>
+
+    <div class="risk-management-section">
+      <div class="risk-management-section-header">
+        <span>Stop Loss</span>
+        <!-- <a>O que é stop loss?</a> -->
+      </div>
+      <div class="risk-management-section-inputs">
+        <app-input
+          [form]="form"
+          type="currency-resizable"
+          name="dailyLossLimit"
+          label="Meta de perda financeira:"
+          leftText="R$"
+          [requiresActivation]="true"
+          [activationValidations]="formActivationValidations.dailyLossLimit"
+        ></app-input>
+        <app-input
+          [form]="form"
+          type="number-resizable"
+          name="dailyMaxLossOperations"
+          label="Quantidade máxima de operações com perda:"
+          rightText="operações"
+          [minWidth]="20"
+          [requiresActivation]="true"
+          [activationValidations]="
+            formActivationValidations.dailyMaxLossOperations
+          "
+        ></app-input>
+      </div>
+    </div>
+  </div>
+</div>
