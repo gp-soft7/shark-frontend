@@ -2,10 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbsService } from './../../../../shared/services/breadcrumbs.service';
 import { ShimmerLoaded } from './../../../../shared/misc/shimmer-loaded';
 import { generateRandomWidths } from './../../../../shared/misc/random-widths';
-import {
-  GetUserProfileResponse,
-  GetUserSubscriptionResponse,
-} from '../../services/user-api/user-api.service.types';
+import { GetUserProfileResponse } from '../../services/user-api/user-api.service.types';
 import { UserApiService } from '../../services/user-api/user-api.service';
 import { Title } from '@angular/platform-browser';
 import { ModalChangePasswordComponent } from '../../components/modal-change-password/modal-change-password.component';
@@ -37,37 +34,27 @@ export class MyAccountComponent implements OnInit, ShimmerLoaded {
     this.breadcrumbsService.update('Início > Minha Conta');
 
     await this.loadUserProfile();
-    await this.loadUserSubscription();
   }
 
   dataItemWidths = generateRandomWidths(8);
 
   userProfile: GetUserProfileResponse;
-  userSubscription: GetUserSubscriptionResponse;
 
   async loadUserProfile() {
     this.userProfile = await this.userApiService.getUserProfile();
   }
 
-  async loadUserSubscription() {
-    this.userSubscription = await this.userApiService.getUserSubscription();
-  }
-
   canShowShimmer(): boolean {
-    return (
-      this.userProfile === undefined && this.userSubscription === undefined
-    );
+    return this.userProfile === undefined;
   }
 
   isLoaded(): boolean {
-    return (
-      this.userProfile !== undefined && this.userSubscription !== undefined
-    );
+    return this.userProfile !== undefined;
   }
 
   getSubscriptionStatus() {
     return SUBSCRIPTION_STATUS[
-      this.userSubscription.status as keyof typeof SUBSCRIPTION_STATUS
+      this.userProfile.subscription?.status as keyof typeof SUBSCRIPTION_STATUS
     ];
   }
 }

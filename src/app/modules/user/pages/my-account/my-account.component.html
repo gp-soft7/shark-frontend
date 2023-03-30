@@ -51,7 +51,7 @@
       <h3>Minha assinatura</h3>
       <div
         class="data-item-list"
-        *ngIf="userSubscription === null; else hasUserSubscription"
+        *ngIf="userProfile.subscription === null; else hasUserSubscription"
       >
         <span>Você não tem uma assinatura.</span>
       </div>
@@ -65,8 +65,29 @@
           <div class="data-item">
             <span>Última Atualização</span>
             <span>{{
-              userSubscription.updatedAt | date : "dd/MM/yyyy HH:mm"
+              userProfile.subscription?.updatedAt | date : "dd/MM/yyyy HH:mm"
             }}</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <h3>Platformas vinculadas</h3>
+
+      <div
+        class="data-item-list"
+        *ngIf="userProfile.vinculations.length === 0; else hasVinculations"
+      >
+        <span>Não há nenhuma plataforma vinculada.</span>
+      </div>
+
+      <ng-template #hasVinculations>
+        <div class="data-item-list">
+          <div
+            class="data-item"
+            *ngFor="let vinculation of userProfile.vinculations"
+          >
+            <span>{{ vinculation.platform }}</span>
+            <span>{{ vinculation.nickname }}</span>
           </div>
         </div>
       </ng-template>

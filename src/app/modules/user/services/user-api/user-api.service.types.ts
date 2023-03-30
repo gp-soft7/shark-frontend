@@ -1,3 +1,5 @@
+import { Platform } from '../../../../core/blaze/types/platform';
+
 export type GetUserProfileResponse = {
   birthDate: string;
   cellphone: string;
@@ -8,10 +10,14 @@ export type GetUserProfileResponse = {
   id: string;
   lastLoginAt: string;
   lastName: string;
-};
-
-export type GetUserSubscriptionResponse = {
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
+  subscription?: {
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  vinculations: {
+    id: string;
+    platform: Platform;
+    nickname: string;
+  }[];
 };
