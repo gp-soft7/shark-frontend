@@ -1,9 +1,4 @@
-<div
-  class="signin-wrapper"
-  [class.signin-wrapper--fixed-height]="
-    responsitivy.isPhone && step == 'COMPLETE_SIGN_UP'
-  "
->
+<div class="signin-wrapper">
   <div class="logo-wrapper">
     <img src="./assets/shark-logo.png" alt="Logo" />
   </div>
@@ -63,100 +58,13 @@
       </form>
     </ng-container>
 
-    <div class="complete-signup-container" *ngIf="step === 'COMPLETE_SIGN_UP'">
-      <form (submit)="completeSignUp()">
-        <div class="form-row">
-          <app-input
-            name="firstName"
-            label="Nome"
-            placeholder="Digite seu nome"
-            [form]="completeSignUpForm"
-            inputWidth="100%"
-          ></app-input>
-
-          <app-input
-            name="lastName"
-            label="Sobrenome"
-            placeholder="Digite seu sobrenome"
-            [form]="completeSignUpForm"
-            inputWidth="100%"
-          ></app-input>
-        </div>
-
-        <div class="form-row">
-          <app-input
-            name="cpf"
-            label="CPF"
-            type="cpf"
-            placeholder="Digite seu CPF"
-            [form]="completeSignUpForm"
-            inputWidth="100%"
-          ></app-input>
-
-          <app-input
-            name="birthDate"
-            label="Data de nascimento"
-            type="date-string"
-            placeholder="Sua data de nascimento"
-            [form]="completeSignUpForm"
-            inputWidth="100%"
-          ></app-input>
-        </div>
-
-        <div class="form-row">
-          <app-input
-            name="cellphone"
-            label="Telefone celular"
-            type="phone"
-            placeholder="Seu telefone celular"
-            [form]="completeSignUpForm"
-            [inputWidth]="responsitivy.isPhone ? '100%' : '50%'"
-          ></app-input>
-        </div>
-
-        <div class="form-row">
-          <app-input
-            name="password"
-            label="Senha"
-            placeholder="Digite sua senha"
-            type="password"
-            [form]="completeSignUpForm"
-            inputWidth="100%"
-          ></app-input>
-
-          <app-input
-            name="password2"
-            label="Confirmação"
-            placeholder="Confirme sua senha"
-            type="password"
-            [form]="completeSignUpForm"
-            inputWidth="100%"
-          ></app-input>
-        </div>
-
-        <p class="burocratic-message">
-          Ao completar o registro você concorda com os
-          <span
-            (click)="modalService.open({ name: 'terms-of-service', data: {} })"
-            >Termos de Uso</span
-          >
-          e
-          <span
-            (click)="modalService.open({ name: 'privacy-policy', data: {} })"
-            >Política de Privacidade</span
-          >.
-        </p>
-
-        <app-button
-          type="submit"
-          (onSafeClick)="completeSignUp()"
-          [enableLoading]="true"
-          >Completar registro</app-button
-        >
-      </form>
+    <div class="anchor-registration" *ngIf="step !== 'COMPLETE_SIGN_UP'">
+      <a [routerLink]="['/signup']"
+        >Ainda não tem uma conta? <span>Registrar</span></a
+      >
     </div>
 
-    <div class="anchor-link" *ngIf="step !== 'COMPLETE_SIGN_UP'">
+    <div class="anchor-forgot-password" *ngIf="step !== 'COMPLETE_SIGN_UP'">
       <a [routerLink]="['/forgot-password']">Esqueci minha senha</a>
     </div>
 

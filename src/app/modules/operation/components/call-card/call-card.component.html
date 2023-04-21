@@ -1,53 +1,91 @@
-<div
-  class="record-card call-card"
-  *ngIf="record.call"
-  [@fadeInOnEnter]
-  (click)="viewCallDetails(record.id)"
->
-  <div class="call-card-header">
-    <div class="call-card-info">
-      <div class="call-card-name">
-        {{ record.call.strategy.name }}
+<ng-container *ngIf="record.call">
+  <div
+    class="record-card call-card"
+    *ngIf="style == 'complete'"
+    [@fadeInOnEnter]
+    (click)="viewCallDetails(record.id)"
+  >
+    <div class="call-card-header">
+      <div class="call-card-info">
+        <div class="call-card-name">
+          {{ record.call.strategy.name }}
+        </div>
+        <div class="call-card-section">
+          <span class="material-icons">{{
+            getStrategyGameIcon(record.call.game)
+          }}</span>
+          {{ record.call.game }}
+        </div>
+        <div class="call-card-section call-card-platform">
+          <span class="material-icons"> pentagon </span>
+          {{ record.call.platform }}
+        </div>
       </div>
-      <div class="call-card-section">
-        <span class="material-icons">{{
-          getStrategyGameIcon(record.call.game)
-        }}</span>
-        {{ record.call.game }}
-      </div>
-      <div class="call-card-section call-card-platform">
-        <span class="material-icons"> pentagon </span>
-        {{ record.call.platform }}
-      </div>
+      <span>{{ getCallDate(record.createdAt) }}</span>
     </div>
-    <span>{{ getCallDate(record.createdAt) }}</span>
-  </div>
-  <div class="call-card-content">
-    <div class="call-card-info">
-      <span
-        class="call-card-status"
-        [class.status-win]="record.call.status === 'WIN'"
-        [class.status-error]="record.call.status === 'ERROR'"
-      >
-        <span class="material-icons">
-          {{ getCallStatusIcon(record.call.status) }}
+    <div class="call-card-content">
+      <div class="call-card-info">
+        <span
+          class="call-card-status"
+          [class.status-win]="record.call.status === 'WIN'"
+          [class.status-error]="record.call.status === 'ERROR'"
+        >
+          <span class="material-icons">
+            {{ getCallStatusIcon(record.call.status) }}
+          </span>
+          {{ getCallStatusLabel(record.call.status) }}
         </span>
-        {{ getCallStatusLabel(record.call.status) }}
-      </span>
-      <span *ngIf="record.accountType === 'DEMO'" class="call-card-account">
-        Conta DEMO
-      </span>
-      <span
-        *ngIf="record.accountType === 'REAL'"
-        class="call-card-account call-card-account--real"
-      >
-        Conta REAL
+        <span *ngIf="record.accountType === 'DEMO'" class="call-card-account">
+          Conta DEMO
+        </span>
+        <span
+          *ngIf="record.accountType === 'REAL'"
+          class="call-card-account call-card-account--real"
+        >
+          Conta REAL
+        </span>
+      </div>
+
+      <span class="call-card-result">
+        <span> {{ record.call.result > 0 ? "+" : "-" }}</span>
+        {{ record.call.result | absolute | currency : "BRL" }}
       </span>
     </div>
-
-    <span class="call-card-result">
-      <span> {{ record.call.result > 0 ? "+" : "-" }}</span>
-      {{ record.call.result | absolute | currency : "BRL" }}
-    </span>
   </div>
-</div>
+
+  <div
+    class="record-card call-card"
+    *ngIf="style == 'simple'"
+    [class.call-card-simple-demo]="record.accountType === 'DEMO'"
+    [@fadeInOnEnter]
+    (click)="viewCallDetails(record.id)"
+  >
+    <div class="call-card-simple-wrapper">
+      <div class="call-card-simple-section">
+        <div
+          class="call-card-status"
+          [class.status-win]="record.call.status === 'WIN'"
+          [class.status-error]="record.call.status === 'ERROR'"
+        >
+          <span class="material-icons">
+            {{ getCallStatusIcon(record.call.status) }}
+          </span>
+        </div>
+
+        <div class="call-card-simple-info">
+          <span>{{ record.call.strategy.name }}</span>
+          <span *ngIf="!responsitivy.isPhone">{{ record.call.game }}</span>
+          <span *ngIf="!responsitivy.isPhone">{{ record.call.platform }}</span>
+        </div>
+      </div>
+
+      <div class="call-card-simple-section call-card-result-time">
+        <span>
+          <span> {{ record.call.result > 0 ? "+" : "-" }}</span>
+          {{ record.call.result | absolute | currency : "BRL" }}</span
+        >
+        <span>{{ getCallDate(record.createdAt) }}</span>
+      </div>
+    </div>
+  </div>
+</ng-container>

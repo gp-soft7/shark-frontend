@@ -39,18 +39,19 @@
           </span>
           {{ strategy.game }}</span
         >
-        <span class="strategy-card-info-platform">
-          <span class="material-icons"> pentagon </span>
-          {{ strategy.platform }}</span
-        >
         <span
           class="strategy-card-info-status"
           [class.status-activated]="strategy.active"
         >
-          <span class="material-icons">
-            {{ strategy.active ? "check" : "close" }}
+          <span>
+            <span class="material-icons">
+              {{ strategy.active ? "check" : "close" }}
+            </span>
+            {{ strategy.active ? "Ativada" : "Desativada" }}
           </span>
-          {{ strategy.active ? "Ativada" : "Desativada" }}
+          <span class="strategy-card-info-platform">
+            {{ strategy.platform }}</span
+          >
         </span>
       </div>
       <div class="strategy-card-actions">

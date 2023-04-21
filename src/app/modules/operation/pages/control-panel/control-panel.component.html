@@ -15,7 +15,6 @@
           !hasBotStatus('STOPPED') &&
           !hasBotStatus('STOP_GAIN') &&
           !hasBotStatus('STOP_LOSS') &&
-          !hasBotStatus('ERRORED') &&
           !hasBotStatus('STARTING') &&
           isOperationButtonHovered
         "
@@ -33,9 +32,7 @@
       <ng-container
         *ngIf="
           !hasBotStatus('STOPPED') &&
-          (hasBotStatus('STOP_GAIN') ||
-            hasBotStatus('STOP_LOSS') ||
-            hasBotStatus('ERRORED')) &&
+          (hasBotStatus('STOP_GAIN') || hasBotStatus('STOP_LOSS')) &&
           isOperationButtonHovered
         "
       >
@@ -152,11 +149,11 @@
         "
       >
         <div class="operation-button">
-          <span class="material-icons"> dangerous </span>
+          <span class="material-icons"> more_horiz </span>
           <p>Erro ao operar</p>
           <small
-            >Ocorreu algum erro durante as operações. Verifique se sua conta
-            possui saldo.</small
+            >O robô irá tentar realizar a operação novamente. (Até 3
+            tentativas)</small
           >
         </div>
       </ng-container>
@@ -230,27 +227,38 @@
       "
     >
       <div class="section-card section-platform-connection-card">
-        <p class="section-card-title">Conexão com a plataforma</p>
+        <p class="section-card-title">Plataforma conectadas</p>
 
-        <ng-container
-          *ngIf="!hasBlazeAccessToken; else elseHasBlazeAccessToken"
-        >
-          <p>
-            Você não está conectado<span class="material-icons"> close </span>
-          </p>
-          <app-button (onSafeClick)="openBlazeConnectionModal()"
-            >Conectar</app-button
+        <div class="connection-card-platform-list">
+          <div
+            class="connection-card-platform"
+            [class.connection-card-platform--connected]="
+              isPlatformConnected(platform)
+            "
+            *ngFor="let platform of ['BLAZE', 'SMASH']"
           >
-        </ng-container>
-
-        <ng-template #elseHasBlazeAccessToken>
-          <p>Você está conectado <span class="material-icons"> check </span></p>
-          <app-button
-            (onSafeClick)="disconnectFromBlaze()"
-            variant="outline-danger"
-            >DESCONECTAR</app-button
-          >
-        </ng-template>
+            <div>
+              <span class="material-icons">
+                {{ isPlatformConnected(platform) ? "check" : "close" }}
+              </span>
+              <span>{{ platform | titlecase }}</span>
+            </div>
+            <app-button
+              *ngIf="!isPlatformConnected(platform)"
+              variant="primary-tiny"
+              [width]="'125px'"
+              (onSafeClick)="openBlazeConnectionModal(platform)"
+              >Conectar</app-button
+            >
+            <app-button
+              *ngIf="isPlatformConnected(platform)"
+              variant="outline-danger-tiny"
+              [width]="'125px'"
+              (onSafeClick)="disconnectFromPlatform(platform)"
+              >Desconectar</app-button
+            >
+          </div>
+        </div>
       </div>
 
       <div class="section-card section-active-strategies-card">
@@ -271,7 +279,6 @@
                 }}</a>
               </div>
               <div class="active-strategy-item-platform">
-                <span class="material-icons"> pentagon </span>
                 <span>{{ strategy.platform }}</span>
               </div>
             </div>
@@ -372,16 +379,24 @@
     </ng-container>
 
     <ng-container *ngIf="isLoaded()">
-      <div class="section-header" [style.width]="'500px'">
+      <div class="section-header" [style.width]="'600px'">
         <h4>Últimos registros</h4>
         <div class="action-buttons">
+          <div
+            class="action-button"
+            (click)="modalCallSettingsComponent.open()"
+          >
+            <span class="material-icons"> settings </span>
+            Configurações
+          </div>
+
           <div
             class="action-button"
             (click)="openViewCallsModal()"
             *ngIf="!responsitivy.isPhone"
           >
             <span class="material-icons"> bar_chart </span>
-            Ver todas as operações
+            Todas as Operações
           </div>
 
           <div
@@ -390,7 +405,7 @@
             *ngIf="accountType !== 'REAL'"
           >
             <span class="material-icons"> delete_forever </span>
-            Excluir operações
+            Excluir Operações
           </div>
         </div>
       </div>
@@ -443,3 +458,4 @@
 <app-modal-blaze-connection></app-modal-blaze-connection>
 <app-modal-call-details></app-modal-call-details>
 <app-modal-smash-vinculation></app-modal-smash-vinculation>
+<app-modal-call-settings></app-modal-call-settings>

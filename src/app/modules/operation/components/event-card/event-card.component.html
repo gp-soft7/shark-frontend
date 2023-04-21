@@ -1,6 +1,6 @@
 <div
   class="record-card event-card"
-  *ngIf="record.event"
+  *ngIf="record.event && canShow()"
   [class]="'event-card-' + getEventRecordTypeClass(record.event.type)"
 >
   <div class="event-card-header">

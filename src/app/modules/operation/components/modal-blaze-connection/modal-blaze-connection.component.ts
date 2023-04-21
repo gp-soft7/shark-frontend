@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from '../../../../shared/components/modal/modal.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BlazeConnectionService } from '../../services/blaze-connection/blaze-connection.service';
+import { Component, OnInit } from '@angular/core'
+import { ModalComponent } from '../../../../shared/components/modal/modal.component'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
-} from 'angular-animations';
+} from 'angular-animations'
+import {
+  ModalPlatformConnectionParams,
+  ModalPlatformConnectionDefinitions,
+} from './modal-blaze-connection.component.types'
+import { PlatformConnectionService } from '../../services/platform-connection/platform-connection.service'
 
 @Component({
   selector: 'app-modal-blaze-connection',
@@ -17,68 +21,65 @@ import {
   ],
 })
 export class ModalBlazeConnectionComponent
-  extends ModalComponent<void>
+  extends ModalComponent<ModalPlatformConnectionParams>
   implements OnInit
 {
-  form: FormGroup;
+  form: FormGroup
 
   constructor(
     private formBuilder: FormBuilder,
-    private blazeConnectionService: BlazeConnectionService
+    private platformConnectionService: PlatformConnectionService
   ) {
-    super();
+    super()
   }
 
   ngOnInit(): void {
+    if (this.form)
+      this.form.valueChanges.subscribe(() => {
+        this.toggleError(false)
+      })
+  }
+
+  override onOpen(): void {
     this.form = this.formBuilder.group({
       accessToken: ['', Validators.required],
-    });
+    })
+  }
 
-    this.form.valueChanges.subscribe(() => {
-      this.toggleError(false);
-    });
+  get definition() {
+    return ModalPlatformConnectionDefinitions[this.params.platform]
   }
 
   toggleError(toggle: boolean) {
-    const control = this.form.get('accessToken');
+    const control = this.form.get('accessToken')
 
     if (!toggle) {
-      control?.setErrors(null);
-      return;
+      control?.setErrors(null)
+      return
     }
 
     control?.setErrors({
       invalidAccessToken: toggle,
-    });
+    })
   }
 
   onFormSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) return
 
-    let formData = this.form.getRawValue();
-    let rawAccessToken = formData['accessToken'] as string;
-    rawAccessToken = rawAccessToken.replace(/'/g, '').replace(/"/g, '');
+    let formData = this.form.getRawValue()
 
-    const rawAccessTokenParts = rawAccessToken.split(';');
+    const accessToken = formData['accessToken']
+      .replace(/'/g, '')
+      .replace(/"/g, '')
+      .trim()
 
-    if (rawAccessTokenParts.length !== 2) {
-      this.toggleError(true);
-      return;
+    if (!this.definition.validate(accessToken)) {
+      this.toggleError(true)
+      return
     }
 
-    const [accessToken, walletId] = rawAccessTokenParts;
+    this.platformConnectionService.connect(this.params.platform, accessToken)
 
-    if (isNaN(walletId as any)) {
-      this.toggleError(true);
-      return;
-    }
-
-    try {
-      this.blazeConnectionService.connect(accessToken, walletId);
-
-      this.close();
-    } catch {
-      this.toggleError(true);
-    }
+    this.close()
   }
 }

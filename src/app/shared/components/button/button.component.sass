@@ -7,7 +7,6 @@ button
   height: 40px
   font-family: $bf
   font-weight: $mw
-  text-transform: uppercase
   font-size: 14px
   cursor: pointer
   transition: all .2s ease
@@ -53,6 +52,21 @@ button
   background: transparent
   color: $gray300
   border: 1px solid $lightorange300
+  font-size: 12px
+
+  &:disabled
+    background: $primary100
+    color: $gray100
+
+  &:hover
+    background: $lightorange300
+
+.button-outline-danger-tiny
+  background: transparent
+  color: $gray300
+  border: 1px solid $lightorange300
+  height: 30px
+  font-size: 12px
 
   &:disabled
     background: $primary100
@@ -80,6 +94,7 @@ button
   background: $primary300
   color: $gray300
   height: 30px
+  font-size: 12px
 
   &:disabled
     background: $primary100

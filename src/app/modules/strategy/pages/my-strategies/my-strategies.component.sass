@@ -86,6 +86,7 @@
       margin-top: 5px
       font-size: 10px
       color: $gray150
+      margin-left: 5px
 
       & .material-icons
         font-size: 10px
@@ -94,13 +95,14 @@
     &-status
       display: flex
       align-items: center
-      font-size: 12px
       margin-top: 15px
-      color: $lightorange300
 
-      & .material-icons
+      & span:first-child
         font-size: 12px
-        margin-right: 5px
+        color: $lightorange300
+
+        & .material-icons
+          font-size: 12px
 
   &-actions
     margin-left: 20px
@@ -127,4 +129,5 @@
     margin-right: 0
 
 .status-activated
-  color: $lightgreen300
+  & span:first-child
+    color: $lightgreen300

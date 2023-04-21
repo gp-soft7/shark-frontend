@@ -3,4 +3,5 @@ export type ButtonVariant =
   | 'outline'
   | 'primary-tiny'
   | 'outline-tiny'
-  | 'outline-danger';
+  | 'outline-danger-tiny'
+  | 'outline-danger'

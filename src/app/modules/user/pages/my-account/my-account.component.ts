@@ -6,6 +6,7 @@ import { GetUserProfileResponse } from '../../services/user-api/user-api.service
 import { UserApiService } from '../../services/user-api/user-api.service';
 import { Title } from '@angular/platform-browser';
 import { ModalChangePasswordComponent } from '../../components/modal-change-password/modal-change-password.component';
+import { ModalService } from './../../../../shared/services/modal.service';
 
 const SUBSCRIPTION_STATUS = {
   ACTIVE: 'Ativa',
@@ -22,6 +23,7 @@ export class MyAccountComponent implements OnInit, ShimmerLoaded {
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private userApiService: UserApiService,
+    private modalService: ModalService,
     private title: Title
   ) {
     this.title.setTitle('Minha conta - Shark');
@@ -56,5 +58,26 @@ export class MyAccountComponent implements OnInit, ShimmerLoaded {
     return SUBSCRIPTION_STATUS[
       this.userProfile.subscription?.status as keyof typeof SUBSCRIPTION_STATUS
     ];
+  }
+
+  unvinculate(vinculationId: string) {
+    this.modalService.open({
+      name: 'confirmation',
+      data: {
+        title: 'Atenção',
+        text: 'Você tem certeza que deseja desvincular essa conta?',
+        onConfirmation: async () => {
+          await this.userApiService.unvinculatePlatform(vinculationId);
+
+          const vinculationIndex = this.userProfile.vinculations.findIndex(
+            (vinculation) => vinculation.id === vinculationId
+          );
+
+          if (vinculationIndex > -1) {
+            this.userProfile.vinculations.splice(vinculationIndex, 1);
+          }
+        },
+      },
+    });
   }
 }

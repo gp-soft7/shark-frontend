@@ -1,0 +1,87 @@
+<div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>Configurações</h3>
+
+      <span (click)="close()" class="modal-header-close-button material-icons">
+        close
+      </span>
+    </div>
+
+    <div class="modal-content">
+      <div class="section-wrapper">
+        <h4>Exibição de Eventos</h4>
+        <div class="checkbox-wrapper">
+          <input
+            id="stop-gain-checkbox"
+            type="checkbox"
+            [(ngModel)]="current.eventExhibitions.STOP_GAIN"
+          />
+          <label for="stop-gain-checkbox">Stop Gain</label>
+        </div>
+        <div class="checkbox-wrapper">
+          <input
+            id="stop-loss-checkbox"
+            type="checkbox"
+            [(ngModel)]="current.eventExhibitions.STOP_LOSS"
+          />
+          <label for="stop-loss-checkbox">Stop Loss</label>
+        </div>
+        <div class="checkbox-wrapper">
+          <input
+            id="bot-start-checkbox"
+            type="checkbox"
+            [(ngModel)]="current.eventExhibitions.BOT_START"
+          />
+          <label for="bot-start-checkbox">Ligado</label>
+        </div>
+        <div class="checkbox-wrapper">
+          <input
+            id="bot-stop-checkbox"
+            type="checkbox"
+            [(ngModel)]="current.eventExhibitions.BOT_STOP"
+          />
+          <label for="bot-stop-checkbox">Desligado</label>
+        </div>
+        <div class="checkbox-wrapper">
+          <input
+            id="bot-errored-checkbox"
+            type="checkbox"
+            [(ngModel)]="current.eventExhibitions.BOT_ERROR"
+          />
+          <label for="bot-errored-checkbox">Erro</label>
+        </div>
+      </div>
+      <div class="section-wrapper">
+        <h4>Estilo do Card</h4>
+        <div class="checkbox-wrapper">
+          <input
+            id="call-card-simple-radio"
+            type="radio"
+            name="call-card-style"
+            [(ngModel)]="current.callCardStyle"
+            value="simple"
+          />
+          <label for="call-card-simple-radio">Simples</label>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input
+            id="call-card-complete-radio"
+            type="radio"
+            name="call-card-style"
+            [(ngModel)]="current.callCardStyle"
+            value="complete"
+          />
+          <label for="call-card-complete-radio">Completo</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <app-button [variant]="'outline-tiny'" type="submit" (click)="close()"
+        >Salvar</app-button
+      >
+    </div>
+  </div>
+</div>

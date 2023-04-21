@@ -4,8 +4,8 @@ export const EVENT_RECORD_LABELS = {
   BOT_START: 'Ligado',
   BOT_STOP: 'Desligado',
   BOT_ERROR:
-    'Ocorreu um erro ao realizar a operação. Verifique se sua conta possui saldo.',
-};
+    'Ocorreu um erro ao realizar a operação. Verifique se sua conta possui saldo ou o se código de acesso expirou.',
+}
 
 export const EVENT_RECORD_ICONS = {
   STOP_GAIN: 'check',
@@ -13,4 +13,4 @@ export const EVENT_RECORD_ICONS = {
   BOT_START: 'power_settings_new',
   BOT_STOP: 'power_settings_new',
   BOT_ERROR: 'error_outline',
-};
+}

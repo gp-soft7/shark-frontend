@@ -1,7 +1,7 @@
 <div class="modal-wrapper" *ngIf="isOpen" [@fadeInOnEnter] [@fadeOutOnLeave]>
   <div class="modal-container">
     <div class="modal-header">
-      <h3>Conectar na Blaze</h3>
+      <h3>Conectar na {{ definition.name }}</h3>
 
       <span (click)="close()" class="modal-header-close-button material-icons">
         close
@@ -13,7 +13,7 @@
         <app-input
           [form]="form"
           name="accessToken"
-          label="Código de acesso da Blaze"
+          [label]="'Código de acesso da ' + definition.name"
           placeholder="Insira o código de acesso"
           inputWidth="100%"
         >
@@ -26,6 +26,11 @@
           >Conectar</app-button
         >
       </form>
+      <div class="help-anchor">
+        <a [href]="definition.helpVideoUrl" target="_blank"
+          >Como pegar o código de acesso?</a
+        >
+      </div>
     </div>
   </div>
 </div>

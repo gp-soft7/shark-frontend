@@ -378,3 +378,40 @@
 
 .negative
   color: #db3a3a !important
+
+.connection-card-platform-list
+  display: flex
+  flex-direction: column
+
+.connection-card-platform
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 10px
+
+  &:last-child
+    margin-bottom: 0
+
+  & div
+    display: flex
+    align-items: center
+
+    & span:nth-child(2)
+      color: $gray300
+
+    & span.material-icons
+      font-size: 14px
+      margin-right: 5px
+      color: $lightorange300
+
+  & button
+    background: none
+    font-family: $bf
+    border: none
+    color: $gray200
+
+.connection-card-platform--connected
+  & div
+
+    & span.material-icons
+      color: $lightgreen300

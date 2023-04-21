@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   fadeInOnEnterAnimation,
@@ -6,6 +6,7 @@ import {
 } from 'angular-animations';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { UserApiService } from './../../../user/services/user-api/user-api.service';
+import { BotService } from './../../services/bot/bot.service';
 
 @Component({
   selector: 'app-modal-smash-vinculation',
@@ -16,22 +17,20 @@ import { UserApiService } from './../../../user/services/user-api/user-api.servi
     fadeOutOnLeaveAnimation({ duration: 400 }),
   ],
 })
-export class ModalSmashVinculationComponent
-  extends ModalComponent<void>
-  implements OnInit
-{
+export class ModalSmashVinculationComponent extends ModalComponent<void> {
   isErrored = false;
 
   form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private userApiService: UserApiService
+    private userApiService: UserApiService,
+    private botService: BotService
   ) {
     super();
   }
 
-  ngOnInit(): void {
+  override onOpen(): void {
     this.form = this.formBuilder.group({
       nickname: ['', Validators.required],
     });
@@ -43,6 +42,10 @@ export class ModalSmashVinculationComponent
 
   toggleError(toggle: boolean) {
     this.isErrored = toggle;
+  }
+
+  override onClose(component: ModalComponent<void>): void {
+    this.botService.botStatus = 'STOPPED';
   }
 
   async onFormSubmit() {

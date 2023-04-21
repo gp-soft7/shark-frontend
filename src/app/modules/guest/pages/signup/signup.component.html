@@ -1,0 +1,123 @@
+<div
+  class="signup-wrapper"
+  [class.signup-wrapper--fixed-height]="responsitivy.isPhone"
+>
+  <div class="logo-wrapper">
+    <img src="./assets/shark-logo.png" alt="Logo" />
+  </div>
+
+  <div class="signup-container">
+    <h3>Criar Conta</h3>
+
+    <div class="complete-signup-container">
+      <form (submit)="submit()">
+        <div class="form-row">
+          <app-input
+            name="firstName"
+            label="Nome"
+            placeholder="Digite seu nome"
+            [form]="form"
+            inputWidth="100%"
+          ></app-input>
+
+          <app-input
+            name="lastName"
+            label="Sobrenome"
+            placeholder="Digite seu sobrenome"
+            [form]="form"
+            inputWidth="100%"
+          ></app-input>
+        </div>
+
+        <div class="form-row">
+          <app-input
+            name="email"
+            label="Email"
+            placeholder="Digite seu email"
+            [form]="form"
+            [inputWidth]="responsitivy.isPhone ? '100%' : '50%'"
+            *ngIf="!isCompleting"
+          ></app-input>
+
+          <!-- <app-input
+            name="cpf"
+            label="CPF"
+            type="cpf"
+            placeholder="Digite seu CPF"
+            [form]="form"
+            [inputWidth]="
+              !isCompleting || responsitivy.isPhone ? '100%' : '50%'
+            "
+          ></app-input> -->
+        </div>
+
+        <!-- <div class="form-row">
+          <app-input
+            name="birthDate"
+            label="Data de nascimento"
+            type="date-string"
+            placeholder="Sua data de nascimento"
+            [form]="form"
+            inputWidth="100%"
+          ></app-input>
+
+          <app-input
+            name="cellphone"
+            label="Telefone celular"
+            type="phone"
+            placeholder="Seu telefone celular"
+            [form]="form"
+          ></app-input>
+        </div> -->
+
+        <div class="form-row">
+          <app-input
+            name="password"
+            label="Senha"
+            placeholder="Digite sua senha"
+            type="password"
+            [form]="form"
+            inputWidth="100%"
+          ></app-input>
+
+          <app-input
+            name="password2"
+            label="Confirmação"
+            placeholder="Confirme sua senha"
+            type="password"
+            [form]="form"
+            inputWidth="100%"
+          ></app-input>
+        </div>
+
+        <p class="burocratic-message">
+          Ao criar a conta você concorda com os
+          <span
+            (click)="modalService.open({ name: 'terms-of-service', data: {} })"
+            >Termos de Uso</span
+          >
+          e
+          <span
+            (click)="modalService.open({ name: 'privacy-policy', data: {} })"
+            >Política de Privacidade</span
+          >.
+        </p>
+
+        <app-button
+          type="submit"
+          (onSafeClick)="submit()"
+          [enableLoading]="true"
+          >Criar conta</app-button
+        >
+      </form>
+
+      <div class="anchor-signin">
+        <a [routerLink]="['/signin']">Voltar para o login</a>
+      </div>
+
+      <div class="error-message">
+        <span *ngIf="isErrored">{{ errorMessage }}</span>
+      </div>
+    </div>
+  </div>
+</div>

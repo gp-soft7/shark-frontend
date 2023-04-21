@@ -49,8 +49,8 @@
         <div class="header-game-select-buttons">
           <app-toggle
             [options]="[
-              { key: 'BLAZE', text: 'Blaze', icon: 'pentagon' },
-              { key: 'SMASH', text: 'Smash', icon: 'pentagon' }
+              { key: 'BLAZE', text: 'Blaze' },
+              { key: 'SMASH', text: 'Smash' }
             ]"
             [selected]="strategyPlatform"
             (onSelected)="editStrategyPlatform($event.key)"
@@ -152,7 +152,7 @@
     >
       <h3>Lista de horários</h3>
       <span
-        >Os horários serão operados de acordo com o horário da Blaze e de
+        >Os horários serão operados de acordo com o horário da Plataforma e de
         BRASÍLIA.</span
       >
 

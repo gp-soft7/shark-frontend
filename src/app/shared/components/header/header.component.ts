@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalService } from './../../services/modal.service';
-import { TokenService } from './../../../core/services/token.service';
-import { UserService } from './../../../core/services/user.service';
-import { BotService } from './../../../modules/operation/services/bot/bot.service';
+import { Component, OnInit } from '@angular/core'
+import { ModalService } from './../../services/modal.service'
+import { TokenService } from './../../../core/services/token.service'
+import { UserService } from './../../../core/services/user.service'
+import { BotService } from './../../../modules/operation/services/bot/bot.service'
 import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
-} from 'angular-animations';
-import { BlazeConnectionService } from '../../../modules/operation/services/blaze-connection/blaze-connection.service';
-import { DropdownItems } from '../dropdown/dropdown.component.types';
-import { Router } from '@angular/router';
-import { RiskManagementApiService } from './../../../modules/operation/services/risk-management-api/risk-managent-api.service';
+} from 'angular-animations'
+import { DropdownItems } from '../dropdown/dropdown.component.types'
+import { Router } from '@angular/router'
+import { RiskManagementApiService } from './../../../modules/operation/services/risk-management-api/risk-managent-api.service'
+import { PlatformConnectionService } from './../../../modules/operation/services/platform-connection/platform-connection.service'
 
 @Component({
   selector: 'app-header',
@@ -27,58 +27,78 @@ export class HeaderComponent implements OnInit {
     private tokenService: TokenService,
     private userService: UserService,
     private botService: BotService,
-    private blazeConnectionService: BlazeConnectionService,
+    private platformConnectionService: PlatformConnectionService,
     private router: Router,
     private riskManagementApiService: RiskManagementApiService
   ) {}
 
   get isAuthenticated() {
-    return this.tokenService.hasToken;
+    return this.tokenService.hasToken
   }
 
   get user() {
-    return this.userService.user;
+    return this.userService.user
   }
 
   get hasRiskManagement() {
-    return !!this.riskManagementApiService.cachedRiskManagement;
+    return !!this.riskManagementApiService.cachedRiskManagement
   }
 
-  isMobileMenuOpen = false;
+  isMobileMenuOpen = false
 
   accountDropdownItems: DropdownItems = [
     {
       text: 'Minha conta',
       icon: 'person',
-      handler: this.navigateToMyAccount.bind(this),
+      handler: this.navigate(() => this.router.navigate(['user'])).bind(this),
     },
     {
       text: 'Deslogar',
       icon: 'logout',
       handler: this.signOut.bind(this),
     },
-  ];
+  ]
 
   ngOnInit(): void {
     if (this.router.url === '/')
-      this.riskManagementApiService.getRiskManagement();
+      this.riskManagementApiService.getRiskManagement()
+
+    if (this.user.isAdmin) {
+      this.accountDropdownItems.splice(1, 0, {
+        text: 'Tokens',
+        icon: 'settings',
+        handler: this.navigate(() =>
+          this.router.navigate(['/admin', 'tokens'])
+        ).bind(this),
+      })
+      this.accountDropdownItems.splice(2, 0, {
+        text: 'Assinaturas',
+        icon: 'settings',
+        handler: this.navigate(() =>
+          this.router.navigate(['/admin', 'subscriptions'])
+        ).bind(this),
+      })
+    }
   }
 
-  navigateToMyAccount() {
-    this.router.navigate(['user']);
-    this.closeMobileMenu();
+  navigate(callback: () => void) {
+    return () => {
+      callback()
+      this.closeMobileMenu()
+    }
   }
 
   openRiskManagementModal() {
-    this.modalService.openRaw('risk-management');
-    this.closeMobileMenu();
+    this.navigate(() => {
+      this.modalService.openRaw('risk-management')
+    })()
   }
 
   doSignOut() {
-    this.botService.stopBot();
-    this.botService.disconnect();
-    this.tokenService.clearTokens();
-    this.blazeConnectionService.disconnect();
+    this.botService.stopBot()
+    this.botService.disconnect()
+    this.tokenService.clearTokens()
+    this.platformConnectionService.disconnectAll()
   }
 
   signOut() {
@@ -89,21 +109,21 @@ export class HeaderComponent implements OnInit {
           title: 'Atenção',
           text: 'O robô está ligado. tem certeza que deseja sair da sua conta? O robô será desligado.',
           onConfirmation: () => {
-            this.doSignOut();
+            this.doSignOut()
           },
         },
-      });
-      return;
+      })
+      return
     }
 
-    this.doSignOut();
+    this.doSignOut()
   }
 
   toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.isMobileMenuOpen = !this.isMobileMenuOpen
   }
 
   closeMobileMenu() {
-    this.isMobileMenuOpen = false;
+    this.isMobileMenuOpen = false
   }
 }

@@ -12,13 +12,16 @@
       <span>
         Você não possui uma conta vinculada a Smash ou a conta fornecida está
         inválida.
+        <a href="https://www.smashup90.com/aff/lpr6kibI" target="_blank"
+          >Crie sua conta clicando aqui</a
+        >. Em seguida, coloque seu nome de usuário no campo abaixo.
       </span>
       <form (submit)="onFormSubmit()" style="margin-top: 20px">
         <app-input
           [form]="form"
           name="nickname"
-          label="Nickname da Smash"
-          placeholder="Insira seu nickname"
+          label="Nome de usuário da Smash"
+          placeholder="Insira seu nome de usuário"
           inputWidth="100%"
         >
         </app-input>
@@ -31,7 +34,7 @@
         >
       </form>
       <div class="error-message" *ngIf="isErrored">
-        <span>Já existe um vínculo com esse nickname.</span>
+        <span>Já existe um vínculo com esse nome de usuário.</span>
       </div>
     </div>
   </div>

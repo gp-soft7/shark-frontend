@@ -25,7 +25,7 @@
           <span>Email</span>
           <span>{{ userProfile.email }}</span>
         </div>
-
+        <!--
         <div class="data-item">
           <span>CPF</span>
           <span>{{ userProfile.cpf }}</span>
@@ -34,7 +34,7 @@
         <div class="data-item">
           <span>Celular</span>
           <span>{{ userProfile.cellphone }}</span>
-        </div>
+        </div> -->
 
         <div class="data-item">
           <span>Último login</span>
@@ -71,7 +71,7 @@
         </div>
       </ng-template>
 
-      <h3>Platformas vinculadas</h3>
+      <h3>Plataformas vinculadas</h3>
 
       <div
         class="data-item-list"
@@ -83,11 +83,18 @@
       <ng-template #hasVinculations>
         <div class="data-item-list">
           <div
-            class="data-item"
+            class="data-item vinculation-item"
             *ngFor="let vinculation of userProfile.vinculations"
           >
-            <span>{{ vinculation.platform }}</span>
-            <span>{{ vinculation.nickname }}</span>
+            <div>
+              <span>{{ vinculation.platform }}</span>
+              <span>{{ vinculation.nickname }}</span>
+            </div>
+            <app-button
+              variant="outline-tiny"
+              (click)="unvinculate(vinculation.id)"
+              >Desvincular</app-button
+            >
           </div>
         </div>
       </ng-template>

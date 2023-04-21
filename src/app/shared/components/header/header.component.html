@@ -22,7 +22,7 @@
     <div class="authenticated" *ngIf="isAuthenticated; else notAuthenticated">
       <app-dropdown [items]="accountDropdownItems">
         <div class="account-dropdown">
-          <span class="highlight">Olá, {{ user.firstName }}</span>
+          <span class="highlight">{{ user.firstName }}</span>
           <span class="material-icons"> expand_more </span>
         </div>
       </app-dropdown>
@@ -55,7 +55,7 @@
       <app-dropdown [items]="accountDropdownItems">
         <div class="account-dropdown">
           <span
-            >Olá, <span class="highlight">{{ user.firstName }}</span></span
+            ><span class="highlight">{{ user.firstName }}</span></span
           >
           <span class="material-icons"> expand_more </span>
         </div>

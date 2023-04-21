@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <div class="section">
+    <form (submit)="updateToken('SMASH_USER', tokenUserSmash)">
+      <h3>Token Usuário Smash</h3>
+      <input
+        type="text"
+        placeholder="Token"
+        [(ngModel)]="tokenUserSmash"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <app-button
+        type="submit"
+        variant="outline-tiny"
+        [enableLoading]="true"
+        (onSafeClick)="updateToken('SMASH_USER', tokenUserSmash)"
+        >Atualizar</app-button
+      >
+    </form>
+  </div>
+
+  <div class="section">
+    <form (submit)="updateToken('SMASH_USER_AFFILIATE', tokenAffiliateSmash)">
+      <h3>Token Afiliados Smash</h3>
+      <input
+        type="text"
+        placeholder="Token"
+        [(ngModel)]="tokenAffiliateSmash"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <app-button
+        type="submit"
+        variant="outline-tiny"
+        [enableLoading]="true"
+        (onSafeClick)="updateToken('SMASH_USER_AFFILIATE', tokenAffiliateSmash)"
+        >Atualizar</app-button
+      >
+    </form>
+  </div>
+</div>
