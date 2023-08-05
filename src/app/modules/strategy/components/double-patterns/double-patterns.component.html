@@ -161,7 +161,10 @@
               <select
                 *ngIf="
                   patternItem.color !== 'white' &&
-                  patternItem.color !== 'random'
+                  patternItem.color !== 'random' &&
+                  patternItem.color !== 'blackred' &&
+                  patternItem.color !== 'blackwhite' &&
+                  patternItem.color !== 'redwhite'
                 "
                 (change)="onPatternItemRollSelectChange($event,{ patternIndex, patternItemIndex })"
                 [value]="patternItem.roll"
