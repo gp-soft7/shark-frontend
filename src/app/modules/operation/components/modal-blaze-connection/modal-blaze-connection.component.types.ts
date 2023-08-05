@@ -6,7 +6,7 @@ export type ModalPlatformConnectionParams = { platform: Platform }
 export const ModalPlatformConnectionDefinitions = {
   [Platform.BLAZE]: {
     name: 'Blaze',
-    helpVideoUrl: '',
+    helpVideoUrl: 'https://vimeo.com/819672827',
     validate: (input: string) => {
       const rawAccessTokenParts = input.split(';')
 
@@ -31,7 +31,7 @@ export const ModalPlatformConnectionDefinitions = {
   },
   [Platform.SMASH]: {
     name: 'Smash',
-    helpVideoUrl: '',
+    helpVideoUrl: 'https://t.me/tutoriaisrobo/12',
     validate: (input: string) => {
       if (input.trim() === '') return false
 

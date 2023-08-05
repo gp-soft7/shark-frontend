@@ -147,7 +147,7 @@ export class CreateStrategyComponent
   defineForm() {
     this.form = this.formBuilder.group({
       name: ['Minha estratégia'],
-      game: ['CRASH'],
+      game: ['DOUBLE'],
       platform: ['BLAZE'],
 
       //Gerenciamento de Risco

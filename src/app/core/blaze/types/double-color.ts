@@ -3,6 +3,9 @@ export enum BlazeDoubleColor {
   BLACK = 'black',
   WHITE = 'white',
   RANDOM = 'random',
+  BLACKRED = 'blackred',
+  BLACKWHITE = 'blackwhite',
+  REDWHITE = 'redwhite',
 }
 
 const DOUBLE_TILES = [
@@ -21,16 +24,16 @@ const DOUBLE_TILES = [
   { roll: 3, color: BlazeDoubleColor.RED },
   { roll: 12, color: BlazeDoubleColor.BLACK },
   { roll: 4, color: BlazeDoubleColor.RED },
-];
+]
 
 export const BlazeRedRolls = DOUBLE_TILES.filter(
   (tile) => tile.color === BlazeDoubleColor.RED
 )
   .map((tile) => tile.roll)
-  .sort((a, b) => a - b);
+  .sort((a, b) => a - b)
 
 export const BlazeBlackRolls = DOUBLE_TILES.filter(
   (tile) => tile.color === BlazeDoubleColor.BLACK
 )
   .map((tile) => tile.roll)
-  .sort((a, b) => a - b);
+  .sort((a, b) => a - b)

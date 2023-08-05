@@ -34,23 +34,25 @@
             class="pattern-config-tooltip"
             *ngIf="isPatternTargetConfigOpen({ patternIndex})"
           >
-            <div
-              class="pattern-config-tooltip-button color block-black"
-              (click)="
+            <section style="margin-top: 0 !important">
+              <div
+                class="pattern-config-tooltip-button color block-black"
+                (click)="
               changePatternTarget({ patternIndex }, 'black')"
-            ></div>
-            <div
-              class="pattern-config-tooltip-button color block-red"
-              (click)="
+              ></div>
+              <div
+                class="pattern-config-tooltip-button color block-red"
+                (click)="
               changePatternTarget({ patternIndex }, 'red')
             "
-            ></div>
-            <div
-              class="pattern-config-tooltip-button color block-white"
-              (click)="
+              ></div>
+              <div
+                class="pattern-config-tooltip-button color block-white"
+                (click)="
               changePatternTarget({ patternIndex }, 'white')
             "
-            ></div>
+              ></div>
+            </section>
           </div>
         </div>
 
@@ -73,69 +75,175 @@
           [class.block-red]="patternItem.color === 'red'"
           [class.block-black]="patternItem.color === 'black'"
           [class.block-white]="patternItem.color === 'white'"
-          [class.block-random]="patternItem.color === 'random'"
+          [class.block-random]="
+            patternItem.color === 'random' ||
+            patternItem.color === 'redwhite' ||
+            patternItem.color === 'blackred' ||
+            patternItem.color === 'blackwhite'
+          "
           [class.block-focus]="isPatternItemConfigOpen({ patternIndex, patternItemIndex})"
           (click)="openPatternItemConfig({ patternIndex, patternItemIndex }); $event.stopPropagation()"
         >
           {{ patternItem.roll ?? "" }}
+
+          <ng-container *ngIf="patternItem.color === 'blackred'">
+            <div
+              class="block-random-double"
+              [style.background]="'#292C48'"
+            ></div>
+            <div
+              class="block-random-double"
+              [style.background]="'#FD0E0E'"
+            ></div>
+          </ng-container>
+
+          <ng-container *ngIf="patternItem.color === 'redwhite'">
+            <div
+              class="block-random-double"
+              [style.background]="'#FD0E0E'"
+            ></div>
+            <div
+              class="block-random-double"
+              [style.background]="'rgba(255, 255, 255, 0.87)'"
+            ></div>
+          </ng-container>
+
+          <ng-container *ngIf="patternItem.color === 'blackwhite'">
+            <div
+              class="block-random-double"
+              [style.background]="'#292C48'"
+            ></div>
+            <div
+              class="block-random-double"
+              [style.background]="'rgba(255, 255, 255, 0.87)'"
+            ></div>
+          </ng-container>
+
+          <ng-container *ngIf="patternItem.color === 'random'">
+            <div class="block-random-triple"></div>
+            <div class="block-random-triple"></div>
+            <div class="block-random-triple"></div>
+          </ng-container>
+
           <div
             #tooltipElement
             class="pattern-config-tooltip"
             *ngIf="isPatternItemConfigOpen({ patternIndex, patternItemIndex})"
           >
-            <div
-              class="pattern-config-tooltip-button"
-              (click)="deletePatternItem({ patternIndex, patternItemIndex })"
-            >
-              <span class="material-icons"> delete_forever </span>
-            </div>
+            <section>
+              <div
+                class="pattern-config-tooltip-button"
+                (click)="deletePatternItem({ patternIndex, patternItemIndex })"
+              >
+                <span class="material-icons"> delete_forever </span>
+              </div>
 
-            <div
-              class="pattern-config-tooltip-button color block-black"
-              (click)="
-                changePatternItemColor({ patternIndex, patternItemIndex }, 'black')
-              "
-            ></div>
-            <div
-              class="pattern-config-tooltip-button color block-red"
-              (click)="
-                changePatternItemColor({ patternIndex, patternItemIndex }, 'red')
-              "
-            ></div>
+              <div
+                class="pattern-config-tooltip-button color block-black"
+                (click)="
+              changePatternItemColor({ patternIndex, patternItemIndex }, 'black')
+            "
+              ></div>
+              <div
+                class="pattern-config-tooltip-button color block-red"
+                (click)="
+              changePatternItemColor({ patternIndex, patternItemIndex }, 'red')
+            "
+              ></div>
 
-            <div
-              class="pattern-config-tooltip-button color block-white"
-              (click)="
-                changePatternItemColor({ patternIndex, patternItemIndex }, 'white')
-              "
-            ></div>
+              <div
+                class="pattern-config-tooltip-button color block-white"
+                (click)="
+              changePatternItemColor({ patternIndex, patternItemIndex }, 'white')
+            "
+              ></div>
 
-            <div
-              class="pattern-config-tooltip-button color block-random tooltip top"
-              (click)="
+              <select
+                *ngIf="
+                  patternItem.color !== 'white' &&
+                  patternItem.color !== 'random'
+                "
+                (change)="onPatternItemRollSelectChange($event,{ patternIndex, patternItemIndex })"
+                [value]="patternItem.roll"
+              >
+                <option [selected]="patternItem.roll == undefined">#</option>
+                <option
+                  [value]="roll"
+                  [selected]="patternItem.roll === roll"
+                  *ngFor="
+                    let roll of patternItem.color === 'black'
+                      ? blackRolls
+                      : redRolls
+                  "
+                >
+                  {{ roll }}
+                </option>
+              </select>
+            </section>
+            <section>
+              <div
+                class="pattern-config-tooltip-button color block-random tooltip top"
+                (click)="
                 changePatternItemColor({ patternIndex, patternItemIndex }, 'random')
               "
-              data-tooltip="Pedra coringa"
-            ></div>
-
-            <select
-              *ngIf="patternItem.color !== 'white' && patternItem.color !== 'random'"
-              (change)="onPatternItemRollSelectChange($event,{ patternIndex, patternItemIndex })"
-              [value]="patternItem.roll"
-            >
-              <option [selected]="patternItem.roll == undefined">#</option>
-              <option
-                [value]="roll"
-                [selected]="patternItem.roll === roll"
-                *ngFor="
-                  let roll of patternItem.color === 'black'
-                    ? blackRolls
-                    : redRolls
-                "
+                data-tooltip="Qualquer cor"
               >
-                {{ roll }}
-              </option>
-            </select>
+                <div class="block-random-triple"></div>
+                <div class="block-random-triple"></div>
+                <div class="block-random-triple"></div>
+              </div>
+
+              <div
+                class="pattern-config-tooltip-button color block-random tooltip top"
+                (click)="
+              changePatternItemColor({ patternIndex, patternItemIndex }, 'blackred')
+            "
+                data-tooltip="Preto ou Vermelho"
+              >
+                <div
+                  class="block-random-double"
+                  [style.background]="'#292C48'"
+                ></div>
+                <div
+                  class="block-random-double"
+                  [style.background]="'#FD0E0E'"
+                ></div>
+              </div>
+
+              <div
+                class="pattern-config-tooltip-button color block-random tooltip top"
+                (click)="
+                changePatternItemColor({ patternIndex, patternItemIndex }, 'redwhite')
+              "
+                data-tooltip="Vermelho ou Branco"
+              >
+                <div
+                  class="block-random-double"
+                  [style.background]="'#FD0E0E'"
+                ></div>
+                <div
+                  class="block-random-double"
+                  [style.background]="'rgba(255, 255, 255, 0.87)'"
+                ></div>
+              </div>
+
+              <div
+                class="pattern-config-tooltip-button color block-random tooltip top"
+                (click)="
+              changePatternItemColor({ patternIndex, patternItemIndex }, 'blackwhite')
+            "
+                data-tooltip="Preto ou Branco"
+              >
+                <div
+                  class="block-random-double"
+                  [style.background]="'#292C48'"
+                ></div>
+                <div
+                  class="block-random-double"
+                  [style.background]="'rgba(255, 255, 255, 0.87)'"
+                ></div>
+              </div>
+            </section>
           </div>
         </div>
 
